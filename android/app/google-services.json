@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "905358406212",
+    "project_id": "news-ware-4b3d0",
+    "storage_bucket": "news-ware-4b3d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905358406212:android:33b303694adcbbcde74211",
+        "android_client_info": {
+          "package_name": "com.fadlen.news_ware"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905358406212-5d6493r8fdbfdjnecl0hhkq6kb2ae3j7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu7uQOauVmrKWvwizqd12aik8UsAqYtqw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "905358406212-5d6493r8fdbfdjnecl0hhkq6kb2ae3j7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
