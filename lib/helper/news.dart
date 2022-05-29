@@ -8,8 +8,11 @@ class News {
   List<ArticleModel> news = [];
 
   Future<void> getNews() async {
+    // String url =
+    //     'https://newsapi.org/v2/top-headlines?country=in&sortBy=popularity&apiKey=b9a7a3e1f77a4f88b4d9206516b31790';
+
     String url =
-        'https://newsapi.org/v2/top-headlines?country=in&sortBy=popularity&apiKey=b9a7a3e1f77a4f88b4d9206516b31790';
+        'https://newsapi.org/v2/top-headlines?pageSize=100&country=in&apiKey=b9a7a3e1f77a4f88b4d9206516b31790';
     var response = await http.get(Uri.parse(url));
     var jsonData = jsonDecode(response.body);
 
@@ -36,7 +39,7 @@ class News {
     // DateTime now = new DateTime.now();
     // DateTime today = new DateTime(now.year, now.month, now.day);
     String url =
-        'https://newsapi.org/v2/everything?q=$query&sortBy=publishedAt&apiKey=b9a7a3e1f77a4f88b4d9206516b31790';
+        'https://newsapi.org/v2/everything?language=en&q=$query&sortBy=publishedAt&apiKey=b9a7a3e1f77a4f88b4d9206516b31790';
     var response = await http.get(Uri.parse(url));
     var jsonData = jsonDecode(response.body);
 

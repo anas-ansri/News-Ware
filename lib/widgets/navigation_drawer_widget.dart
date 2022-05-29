@@ -4,22 +4,29 @@ import 'package:news_ware/screens/menu/feedback.dart';
 import 'package:news_ware/screens/menu/myactivity.dart';
 import 'package:news_ware/screens/menu/news_setting.dart';
 import 'package:news_ware/screens/menu/user_page.dart';
+import 'package:provider/provider.dart';
+
+import '../services/google_sign_in.dart';
 
 typedef VoidCallback = void Function();
 
 class NavigationDrawerWidget extends StatelessWidget {
-  const NavigationDrawerWidget({Key? key}) : super(key: key);
+  String name;
+  String email;
+  String urlImage;
+
+  NavigationDrawerWidget(
+      {Key? key,
+      required this.email,
+      required this.name,
+      required this.urlImage})
+      : super(key: key);
   final Color backgroundColor = const Color(0xFF0D6EFD);
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
   @override
   Widget build(BuildContext context) {
     //Variables for Header in draw
-    const name = "Anas Ansari";
-    const email = "anasalansari4@outlook.com";
-    const urlImage =
-        "https://instagram.fbom17-1.fna.fbcdn.net/v/t51.2885-19/277699386_395153375945574_5669888527873857587_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fbom17-1.fna.fbcdn.net&_nc_cat=106&_nc_ohc=xQFriyUpBXUAX_sbzgg&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT-va2coRFskpxv3kI1q7FBLGZOEZjdkMsCtNkVZE6acLA&oe=625BE2B3&_nc_sid=7bff83";
-
     return Drawer(
       child: Material(
           color: backgroundColor,
@@ -46,7 +53,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                   email: email,
                   onClicked: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) =>
-                          const UserPage(name: name, urlImage: urlImage)))),
+                          UserPage(name: name, urlImage: urlImage)))),
               const SizedBox(
                 height: 20,
               ),
@@ -84,7 +91,19 @@ class NavigationDrawerWidget extends StatelessWidget {
                     const Divider(
                       color: Colors.white70,
                     ),
-                    buildMenuItem(text: "Sign Out ", icon: Icons.logout),
+                    ListTile(
+                      onTap: (() {
+                        final provider = Provider.of<GoogleSignInProvider>(
+                            context,
+                            listen: false);
+                        provider.signOut();
+                      }),
+                      title: const Text(
+                        "Sign Out ",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      leading: const Icon(Icons.logout, color: Colors.white),
+                    )
                   ],
                 ),
               ),

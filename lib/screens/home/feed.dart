@@ -11,6 +11,7 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  // late Future<List<ArticleModel>> articles = ;
   List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
   bool _loading = true;
 
@@ -41,7 +42,7 @@ class _FeedState extends State<Feed> {
               onRefresh: () async {
                 getNews();
                 setState(() async {
-                  News news = new News();
+                  News news = News();
                   await news.getNews();
                   articles = news.news;
                   setState(() {
@@ -51,7 +52,7 @@ class _FeedState extends State<Feed> {
               },
               child: ListView.builder(
                 shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: articles.length,
                 itemBuilder: (context, index) {
                   return NewsCard(
