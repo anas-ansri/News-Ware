@@ -50,14 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
         //App Bar
         appBar: AppBar(
-          title: Row(
-            children: const [
-              Text(
-                "News",
-                style: TextStyle(color: Colors.black38),
-              ),
-              Text("Ware", style: TextStyle(color: Colors.white70))
-            ],
+          title: Text(
+            "News Ware",
+            style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
           backgroundColor: backgroundColor,

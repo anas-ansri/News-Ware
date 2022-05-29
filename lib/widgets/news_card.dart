@@ -29,7 +29,7 @@ class _NewsCardState extends State<NewsCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shadowColor: Colors.black45,
+      shadowColor: Colors.black54,
       margin: const EdgeInsets.all(5),
       shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
