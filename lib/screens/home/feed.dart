@@ -17,6 +17,9 @@ class _FeedState extends State<Feed> {
 
   @override
   void initState() {
+    if (!mounted) {
+      return;
+    }
     super.initState();
     getNews();
   }
@@ -37,7 +40,7 @@ class _FeedState extends State<Feed> {
             child: CircularProgressIndicator(),
           )
         : Container(
-            color: Colors.white,
+            color: Colors.grey[100],
             child: RefreshIndicator(
               onRefresh: () async {
                 getNews();

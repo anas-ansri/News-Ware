@@ -12,5 +12,16 @@ Future<void> userSetup(
     'email': email,
     'photoUrl': photoUrl
   });
+
+  // FirebaseFirestore.instance.collection("users").doc(uid).set({
+  //   'uid': uid,
+  //   'displayName': displayName,
+  //   'email': email,
+  //   'photoUrl': photoUrl
+  // }).then((value) {
+  //   print("Hello");
+  // print(value.id);
+  // });
+
   return;
 }

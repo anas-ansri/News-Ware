@@ -16,7 +16,6 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
-
   String email = '';
   String password = '';
   String error = '';

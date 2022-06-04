@@ -18,7 +18,9 @@ class Wrapper extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasData) {
-              return const HomeScreen();
+              return HomeScreen(
+                selectedIndex: 0,
+              );
             } else if (snapshot.hasError) {
               return const Center(
                 child: Text("Something went wrong!"),

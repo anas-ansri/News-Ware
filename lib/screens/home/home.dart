@@ -8,7 +8,8 @@ import 'package:news_ware/widgets/navigation_drawer_widget.dart';
 import 'package:news_ware/widgets/search_page.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  int selectedIndex = 0;
+  HomeScreen({Key? key, required this.selectedIndex}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,19 +18,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final Color backgroundColor = const Color(0xFF0D6EFD);
   PageController pageController = PageController();
-  int _selectedIndex = 0;
 
   @override
   void initState() {
     pageController = PageController(
-      initialPage: _selectedIndex,
+      initialPage: widget.selectedIndex,
     );
     super.initState();
   }
 
   void onTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      widget.selectedIndex = index;
     });
     pageController.animateToPage(index,
         duration: const Duration(milliseconds: 10), curve: Curves.bounceIn);
@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
+      
 
         //Side Bar Menu
         drawer: NavigationDrawerWidget(
@@ -58,18 +59,25 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: backgroundColor,
           elevation: 0,
           actions: [
-            IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: MySearchDelegate());
-                },
-                icon: const Icon(Icons.search))
+            // IconButton(
+            //     onPressed: () {
+            //       showSearch(context: context, delegate: MySearchDelegate());
+            //     },
+            //     icon: const Icon(Icons.search))
+            Switch(
+                value: false,
+                onChanged: (newValue) {
+                  setState(() {
+                    newValue = true;
+                  });
+                })
           ],
         ),
 
         //Body
         body: PageView(
           controller: pageController,
-          children: const [Feed(), Saved(), Notifications(), Profile()],
+          children: [const Feed(), Notifications(), Saved(), Profile()],
         ),
         //Bottom Navigation bar
         bottomNavigationBar: Theme(
@@ -88,18 +96,18 @@ class _HomeScreenState extends State<HomeScreen> {
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.home,
+                  Icons.newspaper,
                 ),
                 label: "Feed",
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark), label: "Saved"),
+                  icon: Icon(Icons.search), label: "Search"),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.notifications), label: "Notification"),
+                  icon: Icon(Icons.bookmark), label: "Saved"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.person), label: "Profile"),
             ],
-            currentIndex: _selectedIndex,
+            currentIndex: widget.selectedIndex,
             onTap: onTapped,
           ),
         ));

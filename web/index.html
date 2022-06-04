@@ -38,6 +38,7 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
@@ -51,6 +52,7 @@
       scriptTag.type = 'application/javascript';
       document.body.append(scriptTag);
     }
+
 
     if ('serviceWorker' in navigator) {
       // Service workers are supported. Use them.

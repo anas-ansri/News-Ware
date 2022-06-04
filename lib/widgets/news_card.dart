@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:news_ware/helper/expandable_text.dart';
 import 'package:news_ware/screens/article_view.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 // import 'package:share_plus/share_plus.dart';
 
 class NewsCard extends StatefulWidget {
@@ -28,9 +31,18 @@ class _NewsCardState extends State<NewsCard> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime parseDate =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(widget.time);
+
+    var dateTime = DateTime.parse(parseDate.toString());
+    var dateLocal = dateTime.toLocal();
+    var dateNow = DateTime.now();
+    var publishedBefore = dateNow.difference(dateLocal);
+    final timeAgo = DateTime.now().subtract(publishedBefore);
+
     return Card(
       shadowColor: Colors.black54,
-      margin: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(3),
       shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(color: Colors.black38, width: 0)),
@@ -50,7 +62,7 @@ class _NewsCardState extends State<NewsCard> {
               onPressed: () {},
             ),
             title: Text(widget.source),
-            subtitle: Text(widget.author + ", " + widget.time),
+            subtitle: Text(widget.author + ", " + timeago.format(timeAgo)),
           ),
 
           // Image.network(urlImage),

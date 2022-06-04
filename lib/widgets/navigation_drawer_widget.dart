@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ware/screens/home/home.dart';
 import 'package:news_ware/screens/menu/about_us.dart';
 import 'package:news_ware/screens/menu/feedback.dart';
 import 'package:news_ware/screens/menu/myactivity.dart';
@@ -51,9 +52,11 @@ class NavigationDrawerWidget extends StatelessWidget {
                   urlImage: urlImage,
                   name: name,
                   email: email,
+                  // onClicked: () => Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         UserPage(name: name, urlImage: urlImage)))
                   onClicked: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          UserPage(name: name, urlImage: urlImage)))),
+                      builder: (context) => HomeScreen(selectedIndex: 3)))),
               const SizedBox(
                 height: 20,
               ),
@@ -63,6 +66,9 @@ class NavigationDrawerWidget extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: Column(
                   children: [
+                    const Divider(
+                      color: Colors.white70,
+                    ),
                     buildMenuItem(
                         text: "My Activity",
                         icon: Icons.history,
@@ -167,36 +173,34 @@ Widget buildHeader(
       onTap: onClicked,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 10),
-        child: Row(
-          children: [
-            //Profile pic avatar
-            CircleAvatar(radius: 30, backgroundImage: NetworkImage(urlImage)),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(fontSize: 20, color: Colors.white),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  email,
-                  style: const TextStyle(fontSize: 14, color: Colors.white),
-                ),
-              ],
-            ),
-            const Spacer(),
-            const Icon(
-              Icons.edit,
-              color: Colors.white,
-            ),
-            const SizedBox(width: 5)
-          ],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          child: Row(
+            children: [
+              //Profile pic avatar
+              CircleAvatar(radius: 30, backgroundImage: NetworkImage(urlImage)),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    email,
+                    style: const TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ],
+              ),
+              const SizedBox(width: 5)
+            ],
+          ),
         ),
       ),
     );

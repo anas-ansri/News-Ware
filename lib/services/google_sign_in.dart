@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ware/helper/userSetup.dart';
+import 'database.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
@@ -21,10 +22,15 @@ class GoogleSignInProvider extends ChangeNotifier {
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential result =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      User? user = result.user;
 
-      userSetup(googleUser.displayName.toString(), googleUser.email.toString(),
-          googleUser.photoUrl.toString());
+      await DatabaseService(uid: user!.uid)
+          .userSetup(user.displayName, user.email, user.photoURL);
+
+      // userSetup(googleUser.displayName.toString(), googleUser.email.toString(),
+      //     googleUser.photoUrl.toString());
       notifyListeners();
     } on Exception catch (e) {
       print(e.toString());

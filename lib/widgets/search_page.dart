@@ -4,7 +4,6 @@ import '../helper/news.dart';
 import '../models/article_model.dart';
 import 'news_card.dart';
 
-
 class SearchPage extends StatefulWidget {
   final String query;
   SearchPage({Key? key, required this.query}) : super(key: key);

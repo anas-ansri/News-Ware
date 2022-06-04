@@ -25,7 +25,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                   text: TextSpan(children: [
                     TextSpan(
                         text: widget.text,
-                        style: TextStyle(color: Colors.black54)),
+                        style: const TextStyle(color: Colors.black54)),
                     WidgetSpan(
                         child: InkWell(
                             onTap: () {
@@ -33,11 +33,11 @@ class _ExpandableTextState extends State<ExpandableText> {
                                 isOpen = !isOpen;
                               });
                             },
-                            child: Text(
+                            child: const Text(
                               "  less",
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             )),
-                        style: TextStyle(color: Colors.black54))
+                        style: const TextStyle(color: Colors.black54))
                   ]),
                 )))
         : Align(
@@ -52,7 +52,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                             int.parse(
                                 "${(widget.text.length * widget.max).toInt()}")) +
                         "...",
-                    style: TextStyle(color: Colors.black54)),
+                    style: const TextStyle(color: Colors.black54)),
                 WidgetSpan(
                     child: InkWell(
                   mouseCursor: SystemMouseCursors.click,
@@ -61,8 +61,8 @@ class _ExpandableTextState extends State<ExpandableText> {
                       isOpen = !isOpen;
                     });
                   },
-                  child:
-                      Text("Read more", style: TextStyle(color: Colors.black)),
+                  child: const Text("Read more",
+                      style: const TextStyle(color: Colors.black)),
                 )),
               ]),
             ),

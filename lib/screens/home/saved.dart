@@ -14,11 +14,20 @@ class _SavedState extends State<Saved> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
-          Text("This page is under-construction",
+          Text("Saved page is under-construction",
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,color: Colors.grey)),
-          SizedBox(height: 30,),
-          Icon(Icons.construction,size: 50,color: Colors.grey,)
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey)),
+          SizedBox(
+            height: 30,
+          ),
+          Icon(
+            Icons.construction,
+            size: 50,
+            color: Colors.grey,
+          )
         ],
       ),
     );
