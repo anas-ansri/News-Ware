@@ -17,32 +17,21 @@ class _SearchPageState extends State<SearchPage> {
   bool _loading = true;
 
   @override
-  void initState() {
-    super.initState();
-    searchNews(widget.query);
-  }
-
-  searchNews(String query) async {
-    News news = News();
-    await news.searchNews(query);
-    articles = news.news;
-    setState(() {
-      _loading = !_loading;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return _loading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : Container(
-            color: Colors.black12,
-            child: ListView.builder(
+    News news = News();
+
+    return FutureBuilder<List<ArticleModel>>(
+        future: news.searchNews(widget.query.toLowerCase()),
+        builder: (context, AsyncSnapshot<List<ArticleModel>> snapshot) {
+          //let's check if we got a response or not
+          if (snapshot.hasData) {
+            //Now let's make a list of articles
+            List<ArticleModel>? articles = snapshot.data;
+            print(articles?.length);
+            return ListView.builder(
               shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: articles.length,
+              physics: AlwaysScrollableScrollPhysics(),
+              itemCount: articles!.length,
               itemBuilder: (context, index) {
                 return NewsCard(
                     source: articles[index].sourceName,
@@ -53,7 +42,11 @@ class _SearchPageState extends State<SearchPage> {
                     time: articles[index].publishedAt,
                     url: articles[index].url);
               },
-            ),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
           );
+        });
   }
 }

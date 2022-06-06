@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:news_ware/constants.dart';
 
 class RoundedButton extends StatelessWidget {
-  static const kPrimaryColor = Color(0xFF6F35A5);
-  static const kPrimaryLightColor = Color(0xFFF1E6FF);
   final String text;
-  final Function press;
+  final VoidCallback press;
   final Color color, textColor;
   const RoundedButton({
     Key? key,
@@ -36,7 +35,7 @@ class RoundedButton extends StatelessWidget {
         text,
         style: TextStyle(color: textColor),
       ),
-      onPressed: () {},
+      onPressed: press,
       style: ElevatedButton.styleFrom(
           primary: color,
           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),

@@ -5,6 +5,7 @@ import 'package:news_ware/screens/menu/feedback.dart';
 import 'package:news_ware/screens/menu/myactivity.dart';
 import 'package:news_ware/screens/menu/news_setting.dart';
 import 'package:news_ware/screens/menu/user_page.dart';
+import 'package:news_ware/services/auth.dart';
 import 'package:provider/provider.dart';
 
 import '../services/google_sign_in.dart';
@@ -56,7 +57,7 @@ class NavigationDrawerWidget extends StatelessWidget {
                   //     builder: (context) =>
                   //         UserPage(name: name, urlImage: urlImage)))
                   onClicked: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HomeScreen(selectedIndex: 3)))),
+                      builder: (context) => HomeScreen(selectedIndex: 2)))),
               const SizedBox(
                 height: 20,
               ),
@@ -99,9 +100,8 @@ class NavigationDrawerWidget extends StatelessWidget {
                     ),
                     ListTile(
                       onTap: (() {
-                        final provider = Provider.of<GoogleSignInProvider>(
-                            context,
-                            listen: false);
+                        final provider =
+                            Provider.of<AuthService>(context, listen: false);
                         provider.signOut();
                       }),
                       title: const Text(
@@ -148,7 +148,7 @@ void selectedItem(BuildContext context, int index) {
       break;
     case 1:
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const NewsSetting(),
+        builder: (context) => NewsSetting(),
       ));
       break;
     case 2:

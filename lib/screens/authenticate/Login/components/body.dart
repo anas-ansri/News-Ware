@@ -20,17 +20,24 @@ class Body extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               "LOGIN",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50.0),
             ),
             SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/login.svg",
-              height: size.height * 0.35,
-            ),
+            // SvgPicture.asset(
+            //   "assets/icons/login.svg",
+            //   height: size.height * 0.35,
+            // ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
+              validator: (val) {
+                if (val!.isEmpty || !val.contains("@")) {
+                  return "Please enter a valid email";
+                } else {
+                  return null;
+                }
+              },
               hintText: "Your Email",
               onChanged: (value) {},
             ),
@@ -43,6 +50,7 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(
+              login: true,
               press: () {
                 Navigator.push(
                   context,

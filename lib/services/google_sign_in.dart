@@ -26,8 +26,8 @@ class GoogleSignInProvider extends ChangeNotifier {
           await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = result.user;
 
-      await DatabaseService(uid: user!.uid)
-          .userSetup(user.displayName, user.email, user.photoURL);
+      // await DatabaseService(uid: user!.uid)
+      //     .userSetup(user.displayName, user.email, user.photoURL);
 
       // userSetup(googleUser.displayName.toString(), googleUser.email.toString(),
       //     googleUser.photoUrl.toString());

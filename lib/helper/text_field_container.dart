@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_ware/constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
-  static const kPrimaryColor = Color(0xFF6F35A5);
-  static const kPrimaryLightColor = Color(0xFFF1E6FF);
-
   final Widget child;
   const TextFieldContainer({
     Key? key,
@@ -18,7 +16,7 @@ class TextFieldContainer extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       width: size.width * 0.8,
       decoration: BoxDecoration(
-        color: kPrimaryLightColor,
+        color: Colors.grey[300],
         borderRadius: BorderRadius.circular(29),
       ),
       child: child,

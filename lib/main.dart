@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
+      create: (context) => AuthService(),
       child: MaterialApp(
         // debugShowCheckedModeBanner: true,
         theme: ThemeData(

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_ware/screens/authenticate/Login/login_screen.dart';
 import 'package:news_ware/screens/authenticate/Signup/signup_screen.dart';
 import 'package:news_ware/screens/home/home.dart';
 
@@ -26,7 +27,7 @@ class Wrapper extends StatelessWidget {
                 child: Text("Something went wrong!"),
               );
             } else {
-              return SignUpScreen();
+              return LoginScreen();
             }
           }),
     );

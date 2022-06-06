@@ -1,11 +1,12 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
 
-class AuthService {
+class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final googleSignIn = GoogleSignIn();
@@ -35,15 +36,21 @@ class AuthService {
   Future registerWithEmail(
       String email, String password, String displayName) async {
     try {
-      final User? user = (await _auth.createUserWithEmailAndPassword(
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      ))
-          .user;
-      await DatabaseService(uid: user!.uid)
-          .userSetup(user.displayName, user.email, user.photoURL);
+      );
+      final User? user = result.user;
+
+      await DatabaseService(uid: user!.uid).userSetup(
+          displayName,
+          user.email,
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          "Normal");
 
       print("Created");
+      notifyListeners();
+      _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
     }
@@ -91,9 +98,9 @@ class AuthService {
       User? user = result.user;
 
       await DatabaseService(uid: user!.uid)
-          .userSetup(user.displayName, user.email, user.photoURL);
+          .userSetup(user.displayName, user.email, user.photoURL, "Google");
       _userFromFirebaseUser(user);
-      // notifyListeners();
+      notifyListeners();
     } on Exception catch (e) {
       print(e.toString());
     }
@@ -102,6 +109,12 @@ class AuthService {
 //sign out
   Future signOut() async {
     try {
+      try {
+        await googleSignIn.disconnect();
+      } catch (e) {
+        print(e);
+      }
+
       return await _auth.signOut();
     } catch (e) {
       print(e.toString());

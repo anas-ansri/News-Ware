@@ -10,5 +10,6 @@ class UserData {
   final String email;
   final int photoUrl;
 
-  UserData(this.uid, this.displayName, this.email, this.photoUrl);
+  UserData(this.uid, this.displayName, this.email, this.photoUrl,
+      {required name});
 }

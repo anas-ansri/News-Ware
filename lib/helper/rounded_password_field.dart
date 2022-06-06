@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:news_ware/helper/text_field_container.dart';
+import 'package:news_ware/constants.dart';
 
 class RoundedPasswordField extends StatelessWidget {
-  static const kPrimaryColor = Color(0xFF6F35A5);
-  static const kPrimaryLightColor = Color(0xFFF1E6FF);
-
   final ValueChanged<String> onChanged;
+  final String? Function(String?)? validator;
   const RoundedPasswordField({
     Key? key,
     required this.onChanged,
+    this.validator,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      child: TextField(
+      child: TextFormField(
+        validator: validator,
         obscureText: true,
         onChanged: onChanged,
         cursorColor: kPrimaryColor,

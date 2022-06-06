@@ -40,13 +40,13 @@ class _HomeScreenState extends State<HomeScreen> {
     final user = FirebaseAuth.instance.currentUser!;
 
     return Scaffold(
-      
 
         //Side Bar Menu
         drawer: NavigationDrawerWidget(
-          name: user.displayName!,
+          name: user.displayName ?? "New User ",
           email: user.email!,
-          urlImage: user.photoURL!,
+          urlImage: user.photoURL ??
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         ),
 
         //App Bar
@@ -59,25 +59,25 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: backgroundColor,
           elevation: 0,
           actions: [
-            // IconButton(
-            //     onPressed: () {
-            //       showSearch(context: context, delegate: MySearchDelegate());
-            //     },
-            //     icon: const Icon(Icons.search))
-            Switch(
-                value: false,
-                onChanged: (newValue) {
-                  setState(() {
-                    newValue = true;
-                  });
-                })
+            IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: MySearchDelegate());
+                },
+                icon: const Icon(Icons.search))
+            // Switch(
+            //     value: false,
+            //     onChanged: (newValue) {
+            //       setState(() {
+            //         newValue = true;
+            //       });
+            //     })
           ],
         ),
 
         //Body
         body: PageView(
           controller: pageController,
-          children: [const Feed(), Notifications(), Saved(), Profile()],
+          children: const [Feed(), Saved(), Profile()],
         ),
         //Bottom Navigation bar
         bottomNavigationBar: Theme(
@@ -100,8 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 label: "Feed",
               ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: "Search"),
+              // BottomNavigationBarItem(
+              //     icon: Icon(Icons.search), label: "Search"),
               BottomNavigationBarItem(
                   icon: Icon(Icons.bookmark), label: "Saved"),
               BottomNavigationBarItem(

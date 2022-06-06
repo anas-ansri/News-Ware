@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:news_ware/helper/expandable_text.dart';
 import 'package:news_ware/screens/article_view.dart';
+import 'package:news_ware/services/database.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 // import 'package:share_plus/share_plus.dart';
@@ -28,15 +29,16 @@ class _NewsCardState extends State<NewsCard> {
   late int likes = 0;
   bool saveToggle = false;
   bool likeToggle = false;
+  // late final String saveId;
+  Db db = Db();
 
   @override
   Widget build(BuildContext context) {
     DateTime parseDate =
         DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(widget.time);
-
     var dateTime = DateTime.parse(parseDate.toString());
     var dateLocal = dateTime.toLocal();
-    var dateNow = DateTime.now();
+    var dateNow = DateTime.now().toLocal();
     var publishedBefore = dateNow.difference(dateLocal);
     final timeAgo = DateTime.now().subtract(publishedBefore);
 
@@ -159,12 +161,34 @@ class _NewsCardState extends State<NewsCard> {
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onPressed: () {
-                  setState(() {
-                    saveToggle = !saveToggle;
-                  });
+                  final timeStamp =
+                      DateTime.now().millisecondsSinceEpoch.toString();
+                  if (!saveToggle) {
+                    db
+                        .saveArticle(
+                            timeStamp,
+                            widget.source,
+                            widget.author,
+                            widget.urlImage,
+                            widget.title,
+                            widget.dec,
+                            widget.time,
+                            widget.url)
+                        .then((value) {
+                      setState(() {
+                        saveToggle = true;
+                      });
+                    });
+                  } else {
+                    db.removeArticle(timeStamp).then((value) {
+                      setState(() {
+                        saveToggle = false;
+                      });
+                    });
+                  }
                 },
                 icon: saveToggle
-                    ? Icon(Icons.bookmark)
+                    ? const Icon(Icons.bookmark)
                     : Icon(Icons.bookmark_border)),
             const Spacer(),
             IconButton(

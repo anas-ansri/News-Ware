@@ -11,67 +11,95 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  News news = News();
   // late Future<List<ArticleModel>> articles = ;
-  List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
+  // List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
   bool _loading = true;
 
-  @override
-  void initState() {
-    if (!mounted) {
-      return;
-    }
-    super.initState();
-    getNews();
-  }
+  // @override
+  // void initState() {
+  //   if (!mounted) {
+  //     return;
+  //   }
+  //   super.initState();
+  //   getNews();
+  // }
 
-  getNews() async {
-    News news = News();
-    await news.getNews();
-    articles = news.news;
-    setState(() {
-      _loading = !_loading;
-    });
-  }
+  // getNews() async {
+  //   News news = News();
+  //   await news.getNews();
+  //   articles = news.news;
+  //   setState(() {
+  //     _loading = !_loading;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return _loading
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : Container(
-            color: Colors.grey[100],
-            child: RefreshIndicator(
-              onRefresh: () async {
-                getNews();
-                setState(() async {
-                  News news = News();
-                  await news.getNews();
-                  articles = news.news;
-                  setState(() {
-                    _loading = !_loading;
-                  });
-                });
+    // return _loading
+    //     ? const Center(
+    //         child: CircularProgressIndicator(),
+    //       )
+    //     : Container(
+    //         color: Colors.grey[100],
+    //         child: RefreshIndicator(
+    //           onRefresh: () async {
+    //             // getNews();
+    //             // setState(() async {
+    //             //   News news = News();
+    //             //   await news.getNews();
+    //             //   articles = news.news;
+    //             //   setState(() {
+    //             //     _loading = !_loading;
+    //             //   });
+    //             // });
+    //           },
+    //           child:
+    return FutureBuilder<List<ArticleModel>>(
+        future: news.getNews(),
+        builder: (context, AsyncSnapshot<List<ArticleModel>> snapshot) {
+          //let's check if we got a response or not
+          if (snapshot.hasData) {
+            //Now let's make a list of articles
+            List<ArticleModel>? articles = snapshot.data;
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: articles?.length,
+              itemBuilder: (context, index) {
+                return NewsCard(
+                    source: articles![index].sourceName,
+                    author: articles[index].author,
+                    urlImage: articles[index].urlToImage,
+                    title: articles[index].title,
+                    dec: articles[index].description,
+                    time: articles[index].publishedAt,
+                    url: articles[index].url);
               },
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: articles.length,
-                itemBuilder: (context, index) {
-                  return NewsCard(
-                      source: articles[index].sourceName,
-                      author: articles[index].author,
-                      urlImage: articles[index].urlToImage,
-                      title: articles[index].title,
-                      dec: articles[index].description,
-                      time: articles[index].publishedAt,
-                      url: articles[index].url);
-                },
-              ),
-            ),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
           );
+        });
   }
 }
+
+// ListView.builder(
+//   shrinkWrap: true,
+//   physics: const AlwaysScrollableScrollPhysics(),
+//   itemCount: articles.length,
+//   itemBuilder: (context, index) {
+//     return NewsCard(
+//         source: articles[index].sourceName,
+//         author: articles[index].author,
+//         urlImage: articles[index].urlToImage,
+//         title: articles[index].title,
+//         dec: articles[index].description,
+//         time: articles[index].publishedAt,
+//         url: articles[index].url);
+//   },
+// ),
 
 // ListView(
 // children: [
