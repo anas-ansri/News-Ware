@@ -76,6 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         //Body
         body: PageView(
+          physics: NeverScrollableScrollPhysics(),
           controller: pageController,
           children: const [Feed(), Saved(), Profile()],
         ),

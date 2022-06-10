@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:news_ware/constants.dart';
 import 'package:news_ware/helper/news.dart';
 import 'package:news_ware/models/article_model.dart';
+import 'package:news_ware/models/categories.dart';
+import 'package:news_ware/models/user.dart';
+import 'package:news_ware/services/database.dart';
+import 'package:news_ware/widgets/loading.dart';
 import 'package:news_ware/widgets/news_card.dart';
 
 class Feed extends StatefulWidget {
@@ -11,60 +17,102 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  News news = News();
-  // late Future<List<ArticleModel>> articles = ;
-  // List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
+  final categories = Category.all();
   bool _loading = true;
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: categories.length,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: kPrimaryColor,
+          title: TabBar(
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorColor: Colors.white60,
+            indicatorWeight: 5,
+            isScrollable: true,
+            tabs: [
+              ...categories.map((category) => Tab(
+                  child: Align(
+                      child: Text(category.label),
+                      alignment: Alignment.center)))
+            ],
+          ),
+        ),
+        body: TabBarView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            ...categories.map((category) => NewsList(category: category))
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-  // @override
-  // void initState() {
-  //   if (!mounted) {
-  //     return;
-  //   }
-  //   super.initState();
-  //   getNews();
-  // }
+class NewsList extends StatefulWidget {
+  final Category category;
 
-  // getNews() async {
-  //   News news = News();
-  //   await news.getNews();
-  //   articles = news.news;
-  //   setState(() {
-  //     _loading = !_loading;
-  //   });
-  // }
+  NewsList({Key? key, required this.category}) : super(key: key);
+
+  @override
+  State<NewsList> createState() => _NewsListState();
+}
+
+class _NewsListState extends State<NewsList> {
+  News news = News();
+  UserData? userData;
 
   @override
   Widget build(BuildContext context) {
-    // return _loading
-    //     ? const Center(
-    //         child: CircularProgressIndicator(),
-    //       )
-    //     : Container(
-    //         color: Colors.grey[100],
-    //         child: RefreshIndicator(
-    //           onRefresh: () async {
-    //             // getNews();
-    //             // setState(() async {
-    //             //   News news = News();
-    //             //   await news.getNews();
-    //             //   articles = news.news;
-    //             //   setState(() {
-    //             //     _loading = !_loading;
-    //             //   });
-    //             // });
-    //           },
-    //           child:
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    DatabaseService db = DatabaseService(uid: uid);
+
+    return StreamBuilder<UserData>(
+        stream: DatabaseService(uid: uid).userDetail,
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            userData = snapshot.data;
+            return widget.category.label == "Top Headlines"
+                ? TopHeadlines(
+                    country: userData!.country,
+                  )
+                : CategoryNews(
+                    country: userData!.country, category: widget.category);
+          } else {
+            return const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.indigoAccent),
+            );
+          }
+        });
+  }
+}
+
+class TopHeadlines extends StatefulWidget {
+  final String country;
+  const TopHeadlines({Key? key, required this.country}) : super(key: key);
+
+  @override
+  State<TopHeadlines> createState() => _TopHeadlinesState();
+}
+
+class _TopHeadlinesState extends State<TopHeadlines> {
+  News news = News();
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder<List<ArticleModel>>(
-        future: news.getNews(),
-        builder: (context, AsyncSnapshot<List<ArticleModel>> snapshot) {
+        future: news.getNews(widget.country),
+        builder: (context, snapshot) {
           //let's check if we got a response or not
           if (snapshot.hasData) {
             //Now let's make a list of articles
             List<ArticleModel>? articles = snapshot.data;
             return ListView.builder(
               shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: articles?.length,
               itemBuilder: (context, index) {
                 return NewsCard(
@@ -77,10 +125,56 @@ class _FeedState extends State<Feed> {
                     url: articles[index].url);
               },
             );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
           }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          // By default, show a loading spinner.
+          return Loading();
+        });
+  }
+}
+
+class CategoryNews extends StatefulWidget {
+  final Category category;
+  final String country;
+  const CategoryNews({Key? key, required this.country, required this.category})
+      : super(key: key);
+
+  @override
+  State<CategoryNews> createState() => _CategoryNewsState();
+}
+
+class _CategoryNewsState extends State<CategoryNews> {
+  News news = News();
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<ArticleModel>>(
+        future: news.fetchNews(context, widget.category, widget.country),
+        builder: (context, snapshot) {
+          //let's check if we got a response or not
+          if (snapshot.hasData) {
+            //Now let's make a list of articles
+            List<ArticleModel>? articles = snapshot.data;
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              itemCount: articles?.length,
+              itemBuilder: (context, index) {
+                return NewsCard(
+                    source: articles![index].sourceName,
+                    author: articles[index].author,
+                    urlImage: articles[index].urlToImage,
+                    title: articles[index].title,
+                    dec: articles[index].description,
+                    time: articles[index].publishedAt,
+                    url: articles[index].url);
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          // By default, show a loading spinner.
+          return Loading();
         });
   }
 }

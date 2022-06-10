@@ -8,8 +8,8 @@ class UserData {
   final String uid;
   final String displayName;
   final String email;
-  final int photoUrl;
+  final String photoUrl;
+  final String country;
 
-  UserData(this.uid, this.displayName, this.email, this.photoUrl,
-      {required name});
+  UserData(this.uid, this.displayName, this.email, this.photoUrl, this.country);
 }

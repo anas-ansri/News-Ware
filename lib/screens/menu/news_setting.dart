@@ -1,16 +1,28 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
+import 'package:provider/provider.dart';
+import 'package:news_ware/constants.dart';
 
-class NewsSetting extends StatelessWidget {
-  const NewsSetting({Key? key}) : super(key: key);
-  final Color backgroundColor = const Color(0xFF0D6EFD);
+class NewsSetting extends StatefulWidget {
+  NewsSetting({Key? key}) : super(key: key);
 
   @override
+  State<NewsSetting> createState() => _NewsSettingState();
+}
+
+class _NewsSettingState extends State<NewsSetting> {
+  final Color backgroundColor = const Color(0xFF0D6EFD);
+
+  UserData? userData;
+
+  // Future country = db.getCountry();
+  @override
   Widget build(BuildContext context) {
-    String country = 'in';
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    DatabaseService db = DatabaseService(uid: uid);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -23,34 +35,49 @@ class NewsSetting extends StatelessWidget {
         //   onPressed: () {},
         // ),
       ),
-      body: Container(
-        padding: const EdgeInsets.fromLTRB(20, 50, 10, 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Text("Choose your country",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black)),
-            const SizedBox(
-              height: 30,
-            ),
-            CountryCodePicker(
-              initialSelection: country,
-              showCountryOnly: true,
-              showOnlyCountryWhenClosed: true,
-              favorite: const ["us", "in"],
-              onChanged: (value) {
-                String uid = FirebaseAuth.instance.currentUser!.uid;
-                DatabaseService db = DatabaseService(uid: uid);
-                db.setCountry(value.code!);
-              },
-            )
-          ],
-        ),
-      ),
+      body: StreamBuilder<UserData>(
+          stream: DatabaseService(uid: uid).userDetail,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.hasData) {
+              userData = snapshot.data;
+              return Container(
+                padding: const EdgeInsets.fromLTRB(20, 50, 10, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text("Choose your country",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black)),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    CountryCodePicker(
+                      initialSelection: userData?.country,
+                      showCountryOnly: true,
+                      showOnlyCountryWhenClosed: true,
+                      favorite: const ["us", "in"],
+                      onChanged: (value) {
+                        // String uid = FirebaseAuth.instance.currentUser!.uid;
+                        // DatabaseService db = DatabaseService(uid: uid);
+                        db.setCountry(value.code!);
+
+                        // print(db.country);
+                      },
+                    )
+                  ],
+                ),
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
+                ),
+              );
+            }
+          }),
     );
   }
 }

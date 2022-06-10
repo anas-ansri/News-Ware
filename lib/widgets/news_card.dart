@@ -1,9 +1,15 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image/flutter_image.dart';
 import 'package:intl/intl.dart';
 import 'package:news_ware/helper/expandable_text.dart';
 import 'package:news_ware/screens/article_view.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:timeago/timeago.dart' as timeago;
+// import 'package:transparent_image/transparent_image.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 // import 'package:share_plus/share_plus.dart';
 
@@ -77,20 +83,59 @@ class _NewsCardState extends State<NewsCard> {
                             articleUrl: widget.url,
                           )));
             },
-            child: Container(
+            // child: FadeInImage.memoryNetwork(
+            //   fadeInDuration: Duration(milliseconds: 100),
+            //   placeholder: kTransparentImage,
+            //   image: widget.urlImage,
+            // ),
+            // child: Image(
+            //   image: NetworkImageWithRetry(
+            //     widget.urlImage,
+            //   ),
+            //   errorBuilder: (context, exception, stackTrack) => Icon(
+            //     Icons.error,
+            //   ),
+            //   loadingBuilder: (context, exception, stackTrack) =>
+            //       CircularProgressIndicator(),
+            // ),
+            // child: FadeInImage(
+            //   image: NetworkImageWithRetry(widget.urlImage),
+            //   placeholder: const AssetImage("assets/images/placeholder.png"),
+            //   imageErrorBuilder: (context, error, stackTrace) {
+            //     return SizedBox(
+            //       child: Image.asset('assets/images/error.png',
+            //           fit: BoxFit.fill),
+            //     );
+            //   },
+            //   fit: BoxFit.fill,
+            // )
+            child: FancyShimmerImage(
+              imageUrl: widget.urlImage,
+              boxFit: BoxFit.fill,
               width: 400,
               height: 250,
-              // decoration: BoxDecoration(
-              //   border: Border.all(color: Colors.grey),
-              //   borderRadius: BorderRadius.circular(3),
-              //   color: Colors.white54,
-              // ),
-
-              child: SizedBox.expand(
-                child: FittedBox(
-                    fit: BoxFit.fill, child: Image.network(widget.urlImage)),
-              ),
             ),
+
+            // child: CachedNetworkImage(
+            //   imageUrl: widget.urlImage,
+            //   placeholder: (context, url) => CircularProgressIndicator(),
+            //   errorWidget: (context, url, error) => Icon(Icons.error),
+            // ),
+
+            // child: Container(
+            //   width: 400,
+            //   height: 250,
+            //   // decoration: BoxDecoration(
+            //   //   border: Border.all(color: Colors.grey),
+            //   //   borderRadius: BorderRadius.circular(3),
+            //   //   color: Colors.white54,
+            //   // ),
+
+            //   child: SizedBox.expand(
+            //     child: FittedBox(
+            //         fit: BoxFit.fill, child: Image.network(widget.urlImage)),
+            //   ),
+            // ),
           ),
           // SizedBox.expand(
           //   child: FittedBox(
@@ -163,6 +208,7 @@ class _NewsCardState extends State<NewsCard> {
                 onPressed: () {
                   final timeStamp =
                       DateTime.now().millisecondsSinceEpoch.toString();
+
                   if (!saveToggle) {
                     db
                         .saveArticle(

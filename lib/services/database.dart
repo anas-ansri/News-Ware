@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +10,7 @@ import 'package:news_ware/services/auth.dart';
 
 class DatabaseService {
   final String uid;
+  // final String country;
 
   DatabaseService({required this.uid});
 
@@ -64,30 +68,46 @@ class DatabaseService {
 
   Future getCountry() async {
     try {
-      return FutureBuilder<DocumentSnapshot>(
-        future: userData.doc(uid).get(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text("Something went wrong");
-          }
-
-          if (snapshot.hasData && !snapshot.data!.exists) {
-            return Text("Document does not exist");
-          }
-
-          if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            return data['country'];
-          }
-
-          return Text("loading");
+      String country;
+      // Stream documentStream = userData.doc(uid).snapshots();
+      // final docRef = userData.doc(uid);
+      userData.doc(uid).snapshots().listen(
+        (event) {
+          print("current data: ${event.data()}");
+          var data = event.data();
+          // dat
+          // return data["country"];
+          // var jsonData = jsonDecode(data);
+          // data.foreach(()=>)
         },
+        onError: (error) => print("Listen failed: $error"),
       );
+      // await userData.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
+      //   // print(documentSnapshot["country"]);
+      //   country = documentSnapshot["country"];
+      //   // return country;
+      // });
+      // print(country);
+      // return country;
     } catch (e) {
       rethrow;
     }
+  }
+
+  //UserData from snapshot
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    return UserData(
+      uid,
+      snapshot["displayName"],
+      snapshot["email"],
+      snapshot["photoUrl"],
+      snapshot["country"],
+    );
+  }
+
+  //Get user doc steam
+  Stream<UserData> get userDetail {
+    return userData.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 }
 
