@@ -53,7 +53,7 @@ class _NewsCardState extends State<NewsCard> {
       margin: const EdgeInsets.all(3),
       shape: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Colors.black38, width: 0)),
+          borderSide: const BorderSide(color: Colors.black38, width: 0)),
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
