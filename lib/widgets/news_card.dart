@@ -1,14 +1,9 @@
-import 'dart:ui';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image/flutter_image.dart';
 import 'package:intl/intl.dart';
 import 'package:news_ware/helper/expandable_text.dart';
 import 'package:news_ware/screens/article_view.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:timeago/timeago.dart' as timeago;
-// import 'package:transparent_image/transparent_image.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 // import 'package:share_plus/share_plus.dart';
@@ -33,7 +28,7 @@ class NewsCard extends StatefulWidget {
 
 class _NewsCardState extends State<NewsCard> {
   late int likes = 0;
-  bool saveToggle = false;
+
   bool likeToggle = false;
   // late final String saveId;
   Db db = Db();
@@ -202,40 +197,46 @@ class _NewsCardState extends State<NewsCard> {
             SizedBox(
               width: 15,
             ),
-            IconButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: () {
-                  final timeStamp =
-                      DateTime.now().millisecondsSinceEpoch.toString();
+            FutureBuilder(
+              future: db.isSaved(widget.url),
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                bool saveToggle = snapshot.data ?? false;
+                return IconButton(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onPressed: () async {
+                      final timeStamp =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+                      if (!saveToggle) {
+                        await db
+                            .saveArticle(
+                                timeStamp,
+                                widget.source,
+                                widget.author,
+                                widget.urlImage,
+                                widget.title,
+                                widget.dec,
+                                widget.time,
+                                widget.url)
+                            .then((value) {
+                          setState(() {
+                            saveToggle = true;
+                          });
+                        });
+                      } else {
+                        db.removeArticle(widget.url).then((value) {
+                          setState(() {
+                            saveToggle = false;
+                          });
+                        });
+                      }
+                    },
+                    icon: saveToggle
+                        ? const Icon(Icons.bookmark)
+                        : Icon(Icons.bookmark_border));
+              },
+            ),
 
-                  if (!saveToggle) {
-                    db
-                        .saveArticle(
-                            timeStamp,
-                            widget.source,
-                            widget.author,
-                            widget.urlImage,
-                            widget.title,
-                            widget.dec,
-                            widget.time,
-                            widget.url)
-                        .then((value) {
-                      setState(() {
-                        saveToggle = true;
-                      });
-                    });
-                  } else {
-                    db.removeArticle(timeStamp).then((value) {
-                      setState(() {
-                        saveToggle = false;
-                      });
-                    });
-                  }
-                },
-                icon: saveToggle
-                    ? const Icon(Icons.bookmark)
-                    : Icon(Icons.bookmark_border)),
             const Spacer(),
             IconButton(
                 onPressed: () {

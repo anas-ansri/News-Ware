@@ -32,10 +32,6 @@ class Body extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50.0),
             ),
             SizedBox(height: size.height * 0.03),
-            // SvgPicture.asset(
-            //   "assets/icons/login.svg",
-            //   height: size.height * 0.35,
-            // ),
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               validator: (val) {

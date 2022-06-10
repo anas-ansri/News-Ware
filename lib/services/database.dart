@@ -141,13 +141,45 @@ class Db {
     });
   }
 
-  Future removeArticle(String saveId) async {
+  Future removeArticle(String url) async {
     uid = FirebaseAuth.instance.currentUser!.uid;
-    return await database
-        .ref()
-        .child("saved")
-        .child(uid)
-        .child(saveId)
-        .remove();
+    var ref = database.ref().child("saved").child(uid);
+    await ref.once().then((DatabaseEvent databaseEvent) {
+      var docs = databaseEvent.snapshot.children;
+      for (var element in docs) {
+        String docId = element.key as String;
+        // print(element.key);
+        for (var element in element.children) {
+          if (element.value == url) {
+            ref.child(docId).remove();
+            break;
+          }
+        }
+      }
+    });
+  }
+
+  Future<void> removeDoc(String docId) async {
+    uid = FirebaseAuth.instance.currentUser!.uid;
+    return await database.ref().child("saved").child(uid).child(docId).remove();
+  }
+
+  Future<bool> isSaved(String url) async {
+    uid = FirebaseAuth.instance.currentUser!.uid;
+    bool isExist = false;
+    var ref = database.ref().child("saved").child(uid);
+    await ref.once().then((DatabaseEvent databaseEvent) {
+      var docs = databaseEvent.snapshot.children;
+      for (var element in docs) {
+        for (var element in element.children) {
+          if (element.value == url) {
+            isExist = true;
+            break;
+          }
+        }
+      }
+    });
+    print(isExist);
+    return isExist;
   }
 }

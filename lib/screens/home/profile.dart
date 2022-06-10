@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ware/helper/rounded_button.dart';
+import 'package:news_ware/services/database.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  Db db = Db();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -19,9 +21,8 @@ class _ProfileState extends State<Profile> {
           RoundedButton(
               text: "Insert",
               press: () async {
-                FirebaseFirestore.instance
-                    .collection('data')
-                    .add({'text': 'data added through app'});
+                db.removeArticle(
+                    "https://nypost.com/2022/06/10/greg-norman-screen-grab-solved-mickelson-biographers-liv-golf-mystery/");
               }),
           const Text("This page is under-construction",
               textAlign: TextAlign.center,
