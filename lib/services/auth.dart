@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
 
-class AuthService extends ChangeNotifier {
+class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final googleSignIn = GoogleSignIn();
@@ -47,9 +47,6 @@ class AuthService extends ChangeNotifier {
           user.email,
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
           "Normal");
-
-      print("Created");
-      notifyListeners();
       _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -57,31 +54,18 @@ class AuthService extends ChangeNotifier {
   }
 
 //sign in with email
-  // Future signInWithEmailAndPassword(String email, String password) async {
-  //   try {
-  //     AuthResult result = await _auth.signInWithEmailAndPassword(
-  //         email: email, password: password);
-  //     FirebaseUser user = result.user;
-  //     _userFromFirebaseUser(user);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
-
-//register
-  // Future registerWithEmailAndPassword(String email, String password) async {
-  //   try {
-  //     AuthResult result = await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: password);
-  //     FirebaseUser user = result.user;
-  //     await DatabaseService(uid: user.uid).updateUserData("0", "new user", 100);
-  //     _userFromFirebaseUser(user);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      print(email);
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      final User? user = result.user;
+      _userFromFirebaseUser(user!);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   //Sign In with google
   Future googleLogIn() async {
@@ -100,7 +84,6 @@ class AuthService extends ChangeNotifier {
       await DatabaseService(uid: user!.uid)
           .userSetup(user.displayName, user.email, user.photoURL, "Google");
       _userFromFirebaseUser(user);
-      notifyListeners();
     } on Exception catch (e) {
       print(e.toString());
     }

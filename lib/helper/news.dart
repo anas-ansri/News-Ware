@@ -10,7 +10,7 @@ import 'package:news_ware/models/categories.dart';
 
 class News {
   String base = 'https://newsapi.org/v2';
-  String apiKey = "52fc39e671544c6b829af0016bc1efdf";
+  String apiKey = "426c52a71d044294a6f5529d29362c3b";
 
   Future<List<ArticleModel>> getNews(String country) async {
     List<ArticleModel> news = [];

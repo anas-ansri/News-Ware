@@ -42,7 +42,7 @@ class _FeedState extends State<Feed> {
           ),
         ),
         body: TabBarView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           children: [
             ...categories.map((category) => NewsList(category: category))
           ],
@@ -68,7 +68,7 @@ class _NewsListState extends State<NewsList> {
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    DatabaseService db = DatabaseService(uid: uid);
+    // DatabaseService db = DatabaseService(uid: uid);
 
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: uid).userDetail,
@@ -82,9 +82,7 @@ class _NewsListState extends State<NewsList> {
                 : CategoryNews(
                     country: userData!.country, category: widget.category);
           } else {
-            return const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.indigoAccent),
-            );
+            return Loading();
           }
         });
   }

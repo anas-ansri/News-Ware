@@ -6,14 +6,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:news_ware/helper/rounded_password_field.dart';
 import 'package:news_ware/screens/authenticate/Login/components/background.dart';
 import 'package:news_ware/screens/authenticate/Signup/signup_screen.dart';
+import 'package:news_ware/services/auth.dart';
 
 class Body extends StatelessWidget {
-  const Body({
+  Body({
     Key? key,
   }) : super(key: key);
 
+  String email = '';
+  String name = '';
+  String password = '';
+  String error = '';
+
   @override
   Widget build(BuildContext context) {
+    AuthService _auth = AuthService();
     Size size = MediaQuery.of(context).size;
     return Background(
       child: SingleChildScrollView(
@@ -39,14 +46,23 @@ class Body extends StatelessWidget {
                 }
               },
               hintText: "Your Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                email = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                password = value;
+              },
             ),
             RoundedButton(
               text: "LOGIN",
-              press: () {},
+              press: () async {
+                print(email);
+                print(password);
+                await _auth.signInWithEmailAndPassword(email, password);
+                //email:test@test.c pass: tgtgtgtg
+              },
             ),
             SizedBox(height: size.height * 0.03),
             AlreadyHaveAnAccountCheck(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ware/constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Loading extends StatelessWidget {
@@ -39,6 +40,7 @@ class Loading extends StatelessWidget {
             ShimmerWidget.rectangular(height: 17),
             SizedBox(height: 3),
             ShimmerWidget.rectangular(height: 10),
+            ShimmerWidget.rectangular(height: 10),
           ]),
         ),
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: const [
@@ -76,8 +78,8 @@ class ShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: Colors.grey,
-        highlightColor: Colors.grey[300]!,
+        baseColor: Colors.grey[400]!,
+        highlightColor: Colors.grey[200]!,
         period: Duration(seconds: 2),
         child: Container(
           width: width,

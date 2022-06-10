@@ -12,18 +12,27 @@ import '../services/google_sign_in.dart';
 
 typedef VoidCallback = void Function();
 
-class NavigationDrawerWidget extends StatelessWidget {
-  String name;
-  String email;
-  String urlImage;
+class NavigationDrawerWidget extends StatefulWidget {
+  final String name;
+  final String email;
+  final String urlImage;
 
-  NavigationDrawerWidget(
+  const NavigationDrawerWidget(
       {Key? key,
       required this.email,
       required this.name,
       required this.urlImage})
       : super(key: key);
+
+  @override
+  State<NavigationDrawerWidget> createState() => _NavigationDrawerWidgetState();
+}
+
+class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
+  final AuthService _auth = AuthService();
+
   final Color backgroundColor = const Color(0xFF0D6EFD);
+
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
   @override
@@ -50,9 +59,9 @@ class NavigationDrawerWidget extends StatelessWidget {
               //   ],
               // ),
               buildHeader(
-                  urlImage: urlImage,
-                  name: name,
-                  email: email,
+                  urlImage: widget.urlImage,
+                  name: widget.name,
+                  email: widget.email,
                   // onClicked: () => Navigator.of(context).push(MaterialPageRoute(
                   //     builder: (context) =>
                   //         UserPage(name: name, urlImage: urlImage)))
@@ -99,10 +108,8 @@ class NavigationDrawerWidget extends StatelessWidget {
                       color: Colors.white70,
                     ),
                     ListTile(
-                      onTap: (() {
-                        final provider =
-                            Provider.of<AuthService>(context, listen: false);
-                        provider.signOut();
+                      onTap: (() async {
+                        await _auth.signOut();
                       }),
                       title: const Text(
                         "Sign Out ",

@@ -80,15 +80,11 @@ class Body extends StatelessWidget {
                     ),
                     RoundedButton(
                       text: "SIGNUP",
-                      press: () {
-                        print("Hello");
+                      press: () async {
                         if (_formKey.currentState!.validate()) {
-                          loading = true;
-                          final provider =
-                              Provider.of<AuthService>(context, listen: false);
-                          print(provider);
-                          final result =
-                              provider.registerWithEmail(email, password, name);
+                          await _auth.registerWithEmail(email, password, name);
+                        } else {
+                          const Text("Please Enter valid credancials");
                         }
                       },
                     ),
@@ -107,28 +103,41 @@ class Body extends StatelessWidget {
                       },
                     ),
                     const OrDivider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SocalIcon(
-                          iconSrc: "assets/icons/facebook.svg",
-                          press: () {},
-                        ),
-                        SocalIcon(
-                          iconSrc: "assets/icons/twitter.svg",
-                          press: () {},
-                        ),
-                        SocalIcon(
-                          iconSrc: "assets/icons/google-plus.svg",
-                          press: () {
-                            final provider = Provider.of<AuthService>(context,
-                                listen: false);
-                            provider.googleLogIn();
-                            // _auth.googleSignIn;
-                          },
-                        ),
-                      ],
-                    ),
+                    RoundedButton(
+                        text: "Continue with Google",
+                        press: () async {
+                          // final provider =
+                          //     Provider.of<AuthService>(context, listen: false);
+                          // provider.googleLogIn();
+                          try {
+                            await _auth.googleLogIn();
+                          } catch (e) {
+                            error = e.toString();
+                          }
+                        }),
+
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     // SocalIcon(
+                    //     //   iconSrc: "assets/icons/facebook.svg",
+                    //     //   press: () {},
+                    //     // ),
+                    //     // SocalIcon(
+                    //     //   iconSrc: "assets/icons/twitter.svg",
+                    //     //   press: () {},
+                    //     // ),
+                    //     // SocalIcon(
+                    //     //   iconSrc: "assets/icons/google-plus.svg",
+                    //     //   press: () async {
+                    //     //     // final provider = Provider.of<AuthService>(context,
+                    //     //     //     listen: false);
+                    //     //     // provider.googleLogIn();
+                    //     //     await _auth.googleLogIn();
+                    //     //   },
+                    //     // ),
+                    //   ],
+                    // ),
                     Text(error)
                   ],
                 ),

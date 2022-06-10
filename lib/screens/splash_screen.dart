@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:news_ware/models/user.dart';
 import 'package:news_ware/screens/wrapper.dart';
+import 'package:news_ware/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,8 +19,12 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(milliseconds: 2000), () {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const Wrapper()),
-            (route) => false);
+            MaterialPageRoute(builder: (context) {
+          return StreamProvider<MyUser?>.value(
+              value: AuthService().user,
+              initialData: null,
+              child: const Wrapper());
+        }), (route) => false);
       });
     });
     Timer(Duration(milliseconds: 10), () {
