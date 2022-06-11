@@ -3,11 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
-import 'package:provider/provider.dart';
 import 'package:news_ware/constants.dart';
 
 class NewsSetting extends StatefulWidget {
-  NewsSetting({Key? key}) : super(key: key);
+  const NewsSetting({Key? key}) : super(key: key);
 
   @override
   State<NewsSetting> createState() => _NewsSettingState();

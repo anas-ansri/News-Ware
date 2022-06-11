@@ -21,8 +21,7 @@ class _ProfileState extends State<Profile> {
           RoundedButton(
               text: "Insert",
               press: () async {
-                db.removeArticle(
-                    "https://nypost.com/2022/06/10/greg-norman-screen-grab-solved-mickelson-biographers-liv-golf-mystery/");
+                db.getArticles();
               }),
           const Text("This page is under-construction",
               textAlign: TextAlign.center,

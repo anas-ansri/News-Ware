@@ -4,7 +4,7 @@ import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/loading.dart';
 
-import '../helper/news.dart';
+import '../services/news.dart';
 import '../models/article_model.dart';
 import 'news_card.dart';
 

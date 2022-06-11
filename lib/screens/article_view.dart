@@ -33,6 +33,8 @@ class _ArticleViewState extends State<ArticleView> {
                 Icons.arrow_back,
               ))),
       body: WebView(
+        // backgroundColor:Colors.amber,
+
         initialUrl: widget.articleUrl,
         onWebViewCreated: ((WebViewController webViewController) =>
             _completer.complete(webViewController)),

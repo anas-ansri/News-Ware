@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ware/constants.dart';
-import 'package:news_ware/helper/news.dart';
+import 'package:news_ware/services/news.dart';
 import 'package:news_ware/models/article_model.dart';
 import 'package:news_ware/models/categories.dart';
 import 'package:news_ware/models/user.dart';
@@ -68,7 +68,6 @@ class _NewsListState extends State<NewsList> {
   @override
   Widget build(BuildContext context) {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    // DatabaseService db = DatabaseService(uid: uid);
 
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: uid).userDetail,

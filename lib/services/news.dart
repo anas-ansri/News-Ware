@@ -40,7 +40,7 @@ class News {
       print("Error occured ");
       print(response.statusCode);
     }
-
+    // print(news);
     return news;
   }
 

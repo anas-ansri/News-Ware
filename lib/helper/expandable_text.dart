@@ -35,7 +35,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                             },
                             child: const Text(
                               "  less",
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(color: Colors.black),
                             )),
                         style: const TextStyle(color: Colors.black54))
                   ]),
@@ -62,7 +62,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                     });
                   },
                   child: const Text("Read more",
-                      style: const TextStyle(color: Colors.black)),
+                      style: TextStyle(color: Colors.black)),
                 )),
               ]),
             ),

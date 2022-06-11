@@ -2,20 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:news_ware/helper/already_have_an_account_acheck.dart';
 import 'package:news_ware/helper/rounded_button.dart';
 import 'package:news_ware/helper/rounded_input_field.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:news_ware/helper/rounded_password_field.dart';
 import 'package:news_ware/screens/authenticate/Login/components/background.dart';
 import 'package:news_ware/screens/authenticate/Signup/signup_screen.dart';
 import 'package:news_ware/services/auth.dart';
 
-class Body extends StatelessWidget {
-  Body({
+class Body extends StatefulWidget {
+  const Body({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   String email = '';
+
   String name = '';
+
   String password = '';
+
   String error = '';
 
   @override
@@ -54,8 +61,6 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                print(email);
-                print(password);
                 await _auth.signInWithEmailAndPassword(email, password);
                 //email:test@test.c pass: tgtgtgtg
               },

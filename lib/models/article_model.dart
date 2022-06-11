@@ -18,12 +18,13 @@ class ArticleModel {
 
   factory ArticleModel.fromJson(Map<String, dynamic> element) {
     return ArticleModel(
-        sourceName: element['source']['name'],
-        author: element['author'],
-        title: element['title'],
-        description: element['description'],
-        urlToImage: element['urlToImage'],
-        url: element['url'],
-        publishedAt: element['publishedAt']);
+      author: element['author'],
+      description: element['dec'],
+      sourceName: element['source'],
+      publishedAt: element['time'],
+      title: element['title'],
+      url: element['url'],
+      urlToImage: element['urlImage'],
+    );
   }
 }

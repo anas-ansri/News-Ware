@@ -1,12 +1,10 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/widgets.dart';
+import 'package:news_ware/models/article_model.dart';
 import 'package:news_ware/models/user.dart';
-import 'package:news_ware/services/auth.dart';
 
 class DatabaseService {
   final String uid;
@@ -68,19 +66,17 @@ class DatabaseService {
 
   Future getCountry() async {
     try {
-      String country;
       // Stream documentStream = userData.doc(uid).snapshots();
       // final docRef = userData.doc(uid);
       userData.doc(uid).snapshots().listen(
         (event) {
-          print("current data: ${event.data()}");
-          var data = event.data();
+          // print("current data: ${event.data()}");
           // dat
           // return data["country"];
           // var jsonData = jsonDecode(data);
           // data.foreach(()=>)
         },
-        onError: (error) => print("Listen failed: $error"),
+        // onError: (error) => print("Listen failed: $error"),
       );
       // await userData.doc(uid).get().then((DocumentSnapshot documentSnapshot) {
       //   // print(documentSnapshot["country"]);
@@ -171,6 +167,7 @@ class Db {
     await ref.once().then((DatabaseEvent databaseEvent) {
       var docs = databaseEvent.snapshot.children;
       for (var element in docs) {
+        // print(element.key);
         for (var element in element.children) {
           if (element.value == url) {
             isExist = true;
@@ -179,7 +176,36 @@ class Db {
         }
       }
     });
-    print(isExist);
     return isExist;
+  }
+
+  Future<List<ArticleModel>?> getArticles() async {
+    List<ArticleModel> articles = [];
+    uid = FirebaseAuth.instance.currentUser!.uid;
+
+    var ref = FirebaseDatabase.instance.ref().child("saved").child(uid);
+    await ref.once().then((DatabaseEvent databaseEvent) {
+      var docs = databaseEvent.snapshot.children;
+      for (var element in docs) {
+        Map<String, dynamic> data = jsonDecode(jsonEncode(element.value));
+        var article = ArticleModel.fromJson(Map<String, dynamic>.from(data));
+        // print(article.title);
+        // ArticleModel article = ArticleModel(
+        //   author: articleData.author,
+        //   description: articleData.description,
+        //   sourceName: articleData.sourceName,
+        //   publishedAt: articleData.publishedAt,
+        //   title: articleData.title,
+        //   url: articleData.url,
+        //   urlToImage: articleData.url,
+        // );
+
+        // List<ArticleModel> article =
+        // print(article);
+        articles.add(article);
+      }
+    });
+    // print(articles);
+    return articles;
   }
 }

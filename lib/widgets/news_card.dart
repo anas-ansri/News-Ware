@@ -50,14 +50,8 @@ class _NewsCardState extends State<NewsCard> {
           borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(color: Colors.black38, width: 0)),
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ListTile(
-            // hoverColor: Colors.white30,
-            // leading: const CircleAvatar(
-            //  // backgroundImage: //Source image link to be pasted here,
-            //   backgroundColor: Colors.amber,
-            // ),
             //When user click
             onTap: () {},
             trailing: IconButton(
@@ -67,8 +61,6 @@ class _NewsCardState extends State<NewsCard> {
             title: Text(widget.source),
             subtitle: Text(widget.author + ", " + timeago.format(timeAgo)),
           ),
-
-          // Image.network(urlImage),
           GestureDetector(
             onTap: () {
               Navigator.push(
@@ -78,70 +70,13 @@ class _NewsCardState extends State<NewsCard> {
                             articleUrl: widget.url,
                           )));
             },
-            // child: FadeInImage.memoryNetwork(
-            //   fadeInDuration: Duration(milliseconds: 100),
-            //   placeholder: kTransparentImage,
-            //   image: widget.urlImage,
-            // ),
-            // child: Image(
-            //   image: NetworkImageWithRetry(
-            //     widget.urlImage,
-            //   ),
-            //   errorBuilder: (context, exception, stackTrack) => Icon(
-            //     Icons.error,
-            //   ),
-            //   loadingBuilder: (context, exception, stackTrack) =>
-            //       CircularProgressIndicator(),
-            // ),
-            // child: FadeInImage(
-            //   image: NetworkImageWithRetry(widget.urlImage),
-            //   placeholder: const AssetImage("assets/images/placeholder.png"),
-            //   imageErrorBuilder: (context, error, stackTrace) {
-            //     return SizedBox(
-            //       child: Image.asset('assets/images/error.png',
-            //           fit: BoxFit.fill),
-            //     );
-            //   },
-            //   fit: BoxFit.fill,
-            // )
             child: FancyShimmerImage(
               imageUrl: widget.urlImage,
               boxFit: BoxFit.fill,
               width: 400,
               height: 250,
             ),
-
-            // child: CachedNetworkImage(
-            //   imageUrl: widget.urlImage,
-            //   placeholder: (context, url) => CircularProgressIndicator(),
-            //   errorWidget: (context, url, error) => Icon(Icons.error),
-            // ),
-
-            // child: Container(
-            //   width: 400,
-            //   height: 250,
-            //   // decoration: BoxDecoration(
-            //   //   border: Border.all(color: Colors.grey),
-            //   //   borderRadius: BorderRadius.circular(3),
-            //   //   color: Colors.white54,
-            //   // ),
-
-            //   child: SizedBox.expand(
-            //     child: FittedBox(
-            //         fit: BoxFit.fill, child: Image.network(widget.urlImage)),
-            //   ),
-            // ),
           ),
-          // SizedBox.expand(
-          //   child: FittedBox(
-          //     child: Image.network(
-          //       widget.urlImage,
-          //       width: 100,
-          //       height: 100,
-          //     ),
-          //     fit: BoxFit.scaleDown,
-          //   ),
-          // ),
           Container(
             padding: const EdgeInsets.all(10),
             child: Column(
@@ -236,7 +171,6 @@ class _NewsCardState extends State<NewsCard> {
                         : Icon(Icons.bookmark_border));
               },
             ),
-
             const Spacer(),
             IconButton(
                 onPressed: () {
