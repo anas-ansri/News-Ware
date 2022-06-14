@@ -1,8 +1,15 @@
+// import 'dart:html';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:news_ware/constants.dart';
 import 'package:news_ware/helper/expandable_text.dart';
 import 'package:news_ware/screens/article_view.dart';
 import 'package:news_ware/services/database.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
@@ -54,10 +61,10 @@ class _NewsCardState extends State<NewsCard> {
           ListTile(
             //When user click
             onTap: () {},
-            trailing: IconButton(
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {},
-            ),
+            // trailing: IconButton(
+            //   icon: const Icon(Icons.more_vert),
+            //   onPressed: () {},
+            // ),
             title: Text(widget.source),
             subtitle: Text(widget.author + ", " + timeago.format(timeAgo)),
           ),
@@ -75,6 +82,7 @@ class _NewsCardState extends State<NewsCard> {
               boxFit: BoxFit.fill,
               width: 400,
               height: 250,
+              errorWidget: Image.asset("assets/images/breaking.jpg"),
             ),
           ),
           Container(
@@ -83,34 +91,12 @@ class _NewsCardState extends State<NewsCard> {
               children: [
                 Text(
                   widget.title,
+                  // textAlign: TextAlign.start,
                   style: const TextStyle(
                       fontSize: 17, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 3),
-                // ReadMoreText(
-                //   widget.dec,
-                //   trimLines: 1,
-                //   colorClickableText: Colors.pink,
-                //   trimMode: TrimMode.Line,
-                //   trimCollapsedText: 'Show more',
-                //   trimExpandedText: 'Show less',
-                //   moreStyle:
-                //       TextStyle(fontSize: 5, fontWeight: FontWeight.bold),
-                // ),
-                // ExpandableText(
-                //   'The Flutter framework builds its layout via the composition of widgets, everything that you construct programmatically is a widget and these are compiled together to create the user interface. ',
-                //   trimLines: 2,
-                //   colorClickableText: Colors.pink,
-                //   trimMode: TrimMode.Line,
-                //   trimCollapsedText: '...Read more',
-                //   trimExpandedText: ' Less',
-                // ),
                 ExpandableText(text: widget.dec, max: .5)
-
-                // Text(
-                //   widget.dec,
-                //   style: const TextStyle(color: Colors.black54),
-                // ),
               ],
             ),
           ),
@@ -154,6 +140,17 @@ class _NewsCardState extends State<NewsCard> {
                                 widget.time,
                                 widget.url)
                             .then((value) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text(
+                              "Article Saved!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: kPrimaryColor),
+                            ),
+                            backgroundColor: Colors.white,
+                            // duration: Duration(seconds: 1),
+                          ));
+
                           setState(() {
                             saveToggle = true;
                           });
@@ -173,9 +170,16 @@ class _NewsCardState extends State<NewsCard> {
             ),
             const Spacer(),
             IconButton(
-                onPressed: () {
-                  // Share.share(widget.url);
-                  // share(context, articles)
+                onPressed: () async {
+                  final url = Uri.parse(widget.urlImage);
+                  final response = await http.get(url);
+                  final bytes = response.bodyBytes;
+                  final temp = await getTemporaryDirectory();
+                  final path = "${temp.path}/image.jpg";
+                  File(path).writeAsBytesSync(bytes);
+
+                  await Share.shareFiles([path],
+                      text: "${widget.title}\nNews Url: ${widget.url}");
                 },
                 icon: const Icon(Icons.share)),
             SizedBox(

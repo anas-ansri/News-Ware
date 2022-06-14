@@ -110,7 +110,9 @@ class Body extends StatelessWidget {
                           //     Provider.of<AuthService>(context, listen: false);
                           // provider.googleLogIn();
                           try {
-                            await _auth.googleLogIn();
+                            await _auth
+                                .googleLogIn()
+                                .then((value) => {Navigator.of(context).pop()});
                           } catch (e) {
                             error = e.toString();
                           }

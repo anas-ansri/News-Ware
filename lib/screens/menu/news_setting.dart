@@ -20,6 +20,7 @@ class _NewsSettingState extends State<NewsSetting> {
   // Future country = db.getCountry();
   @override
   Widget build(BuildContext context) {
+    // print(allCountries.length);
     String uid = FirebaseAuth.instance.currentUser!.uid;
     DatabaseService db = DatabaseService(uid: uid);
     return Scaffold(
@@ -41,7 +42,7 @@ class _NewsSettingState extends State<NewsSetting> {
               userData = snapshot.data;
               return Container(
                 padding: const EdgeInsets.fromLTRB(20, 50, 10, 0),
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text("Choose your country",
@@ -56,6 +57,7 @@ class _NewsSettingState extends State<NewsSetting> {
                     CountryCodePicker(
                       initialSelection: userData?.country,
                       showCountryOnly: true,
+                      countryFilter: allCountries,
                       showOnlyCountryWhenClosed: true,
                       favorite: const ["us", "in"],
                       onChanged: (value) {

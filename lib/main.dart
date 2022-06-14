@@ -10,11 +10,10 @@ import 'package:news_ware/screens/splash_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   ByteData data = await PlatformAssetBundle().load('assets/ca/encrypt.pem');
-
   SecurityContext.defaultContext
       .setTrustedCertificatesBytes(data.buffer.asUint8List());
+
   runApp(const MyApp());
 }
 

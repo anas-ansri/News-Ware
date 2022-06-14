@@ -43,7 +43,7 @@ class _SavedState extends State<Saved> {
             return Text("${snapshot.error}");
           }
           // By default, show a loading spinner.
-          return Loading();
+          return const Loading();
         });
   }
 }

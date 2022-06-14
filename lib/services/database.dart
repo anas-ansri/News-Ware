@@ -56,6 +56,22 @@ class DatabaseService {
     }
   }
 
+  Future updateUserName(String displayName) async {
+    try {
+      return await userData.doc(uid).update({'displayName': displayName});
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future updateUserPic(String photoUrl) async {
+    try {
+      return await userData.doc(uid).update({'photoUrl': photoUrl});
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future setCountry(String country) async {
     try {
       return await userData.doc(uid).update({'country': country});

@@ -1,16 +1,16 @@
 import 'dart:convert';
 // import 'package:intl/intl.dart';
 // import 'package:intl/intl.dart';
-import 'dart:convert';
+// import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+// import 'package:http/http.dart';
 import 'package:news_ware/models/article_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_ware/models/categories.dart';
 
 class News {
   String base = 'https://newsapi.org/v2';
-  String apiKey = "426c52a71d044294a6f5529d29362c3b";
+  String apiKey = "b9a7a3e1f77a4f88b4d9206516b31790";
 
   Future<List<ArticleModel>> getNews(String country) async {
     List<ArticleModel> news = [];
@@ -20,6 +20,7 @@ class News {
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       if (jsonData['status'] == 'ok') {
+        // print(jsonData["totalResults"]);
         jsonData['articles'].forEach((element) {
           if (element['urlToImage'] != null &&
               element['description'] != null &&
@@ -44,16 +45,17 @@ class News {
     return news;
   }
 
-  Future<List<ArticleModel>> searchNews(String query, String country) async {
+  Future<List<ArticleModel>> searchNews(String query) async {
     List<ArticleModel> news = [];
     // DateTime now = new DateTime.now();
     // DateTime today = new DateTime(now.year, now.month, now.day);
-    String url =
-        'https://newsapi.org/v2/everything?&q=$query&sortBy=publishedAt&apiKey=$apiKey';
+    String url = '$base/everything?language=en&q=$query&apiKey=$apiKey';
+    // https: //newsapi.org/v2/everything?q=tesla&from=2022-05-14&sortBy=publishedAt&apiKey=API_KEY
     var response = await http.get(Uri.parse(url));
     var jsonData = jsonDecode(response.body);
 
     if (jsonData['status'] == 'ok') {
+      print(jsonData["totalResults"]);
       jsonData['articles'].forEach((element) {
         if (element['urlToImage'] != null &&
             element['description'] != null &&
@@ -85,6 +87,7 @@ class News {
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
       if (jsonData['status'] == 'ok') {
+        // print(jsonData["totalResults"]);
         jsonData['articles'].forEach((element) {
           if (element['urlToImage'] != null &&
               element['description'] != null &&

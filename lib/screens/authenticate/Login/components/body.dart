@@ -61,7 +61,9 @@ class _BodyState extends State<Body> {
             RoundedButton(
               text: "LOGIN",
               press: () async {
-                await _auth.signInWithEmailAndPassword(email, password);
+                await _auth
+                    .signInWithEmailAndPassword(email, password)
+                    .then((value) => {Navigator.of(context).pop()});
                 //email:test@test.c pass: tgtgtgtg
               },
             ),

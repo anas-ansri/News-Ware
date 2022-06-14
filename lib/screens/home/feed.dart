@@ -10,7 +10,8 @@ import 'package:news_ware/widgets/loading.dart';
 import 'package:news_ware/widgets/news_card.dart';
 
 class Feed extends StatefulWidget {
-  const Feed({Key? key}) : super(key: key);
+  final UserData? userData;
+  const Feed({Key? key, required this.userData}) : super(key: key);
 
   @override
   State<Feed> createState() => _FeedState();
@@ -44,7 +45,10 @@ class _FeedState extends State<Feed> {
         body: TabBarView(
           physics: const BouncingScrollPhysics(),
           children: [
-            ...categories.map((category) => NewsList(category: category))
+            ...categories.map((category) => NewsList(
+                  category: category,
+                  userData: widget.userData,
+                ))
           ],
         ),
       ),
@@ -54,8 +58,10 @@ class _FeedState extends State<Feed> {
 
 class NewsList extends StatefulWidget {
   final Category category;
+  final UserData? userData;
 
-  NewsList({Key? key, required this.category}) : super(key: key);
+  NewsList({Key? key, required this.category, required this.userData})
+      : super(key: key);
 
   @override
   State<NewsList> createState() => _NewsListState();
@@ -63,27 +69,26 @@ class NewsList extends StatefulWidget {
 
 class _NewsListState extends State<NewsList> {
   News news = News();
-  UserData? userData;
 
   @override
   Widget build(BuildContext context) {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
+    // String uid = FirebaseAuth.instance.currentUser!.uid;
 
-    return StreamBuilder<UserData>(
-        stream: DatabaseService(uid: uid).userDetail,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            userData = snapshot.data;
-            return widget.category.label == "Top Headlines"
-                ? TopHeadlines(
-                    country: userData!.country,
-                  )
-                : CategoryNews(
-                    country: userData!.country, category: widget.category);
-          } else {
-            return Loading();
-          }
-        });
+    // return StreamBuilder<UserData>(
+    //     stream: DatabaseService(uid: uid).userDetail,
+    //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+    //       if (snapshot.hasData) {
+    //         userData = snapshot.data;
+    return widget.category.label == "Top Headlines"
+        ? TopHeadlines(
+            country: widget.userData!.country,
+          )
+        : CategoryNews(
+            country: widget.userData!.country, category: widget.category);
+    //   } else {
+    //     return Loading();
+    //   }
+    // });
   }
 }
 
