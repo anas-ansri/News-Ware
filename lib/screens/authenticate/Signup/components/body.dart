@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:news_ware/constants.dart';
 import 'package:news_ware/helper/already_have_an_account_acheck.dart';
 import 'package:news_ware/helper/loading.dart';
 import 'package:news_ware/helper/rounded_button.dart';
@@ -9,10 +10,6 @@ import 'package:news_ware/screens/authenticate/Login/login_screen.dart';
 import 'package:news_ware/screens/authenticate/Signup/components/background.dart';
 import 'package:news_ware/screens/authenticate/Signup/components/or_divider.dart';
 import 'package:news_ware/services/auth.dart';
-
-import 'package:provider/provider.dart';
-
-import 'social_icon.dart';
 
 class Body extends StatelessWidget {
   AuthService _auth = AuthService();
@@ -35,11 +32,11 @@ class Body extends StatelessWidget {
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
+                  children: [
                     const Text(
                       "SIGNUP",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 50),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 50),
                     ),
                     SizedBox(height: size.height * 0.03),
                     // SvgPicture.asset(
@@ -78,13 +75,22 @@ class Body extends StatelessWidget {
                         password = value;
                       },
                     ),
+                    Text(error),
                     RoundedButton(
                       text: "SIGNUP",
                       press: () async {
-                        if (_formKey.currentState!.validate()) {
-                          await _auth.registerWithEmail(email, password, name);
-                        } else {
-                          const Text("Please Enter valid credancials");
+                        try {
+                          if (_formKey.currentState!.validate()) {
+                            await _auth.registerWithEmail(
+                                email, password, name);
+                          } else {
+                            const Text("Please Enter valid credancials");
+                          }
+                        } catch (e) {
+                          error = e.toString();
+
+                          // TODO
+                          // showErrorAlert(context, e.toString());
                         }
                       },
                     ),
@@ -103,19 +109,22 @@ class Body extends StatelessWidget {
                       },
                     ),
                     const OrDivider(),
-                    RoundedButton(
-                        text: "Continue with Google",
-                        press: () async {
+                    TextButton.icon(
+                        // style: ButtonStyle(backgroundColor: MaterialColor()),
+                        label: const Text("Sign In with Google"),
+                        icon: const Icon(FontAwesomeIcons.google),
+                        onPressed: () async {
                           // final provider =
                           //     Provider.of<AuthService>(context, listen: false);
                           // provider.googleLogIn();
-                          try {
-                            await _auth
-                                .googleLogIn()
-                                .then((value) => {Navigator.of(context).pop()});
-                          } catch (e) {
-                            error = e.toString();
-                          }
+                          // try {
+                          await _auth
+                              .googleLogIn()
+                              .then((value) => {Navigator.of(context).pop()});
+                          // } on Exception catch (e) {
+                          //   // print(e.toString());
+                          //   showErrorAlert(context, e.toString());
+                          // }
                         }),
 
                     // Row(
@@ -140,7 +149,6 @@ class Body extends StatelessWidget {
                     //     // ),
                     //   ],
                     // ),
-                    Text(error)
                   ],
                 ),
               ),

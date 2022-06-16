@@ -35,6 +35,33 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
+  void selectedItem(BuildContext context, int index) {
+    Navigator.of(context).pop();
+    switch (index) {
+      case 0:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const MyActivity(),
+        ));
+        break;
+      case 1:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => NewsSetting(),
+        ));
+        break;
+      case 2:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) =>
+              FeedbackPage(email: widget.email, name: widget.name),
+        ));
+        break;
+      case 3:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const AboutUs(),
+        ));
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //Variables for Header in draw
@@ -143,32 +170,6 @@ Widget buildMenuItem(
     ),
     hoverColor: hoverColor,
   );
-}
-
-void selectedItem(BuildContext context, int index) {
-  Navigator.of(context).pop();
-  switch (index) {
-    case 0:
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const MyActivity(),
-      ));
-      break;
-    case 1:
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => NewsSetting(),
-      ));
-      break;
-    case 2:
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const FeedbackPage(),
-      ));
-      break;
-    case 3:
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const AboutUs(),
-      ));
-      break;
-  }
 }
 
 Widget buildHeader(

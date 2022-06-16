@@ -118,7 +118,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   imageQuality: 25,
                 );
                 if (pickedFile == null) {
-                  return showAlertDialog(context);
+                  return showAlertDialog(context, "Photo not selected",
+                      "Please select a picture.", false);
                 } else {
                   File image = File(pickedFile.path);
 
@@ -128,7 +129,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   downloadURL = await (await uploadTask).ref.getDownloadURL();
                   setState(() {
                     _newPhotoUrl = downloadURL;
-                    print(downloadURL);
+                    // print(downloadURL);
                   });
                 }
               },
@@ -179,35 +180,5 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 })
           ],
         ));
-  }
-
-  showAlertDialog(BuildContext context) {
-    // Create button
-    Widget okButton = TextButton(
-      child: const Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // Create AlertDialog
-    AlertDialog alert = AlertDialog(
-      shape: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(color: Colors.black38, width: 0)),
-      title: const Text("Photo not selected"),
-      content: const Text("You haven't selected any picture."),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 }

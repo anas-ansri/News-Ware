@@ -61,3 +61,69 @@ const List<String> allCountries = [
   "ve",
   "za"
 ];
+
+showErrorAlert(BuildContext context, String error) {
+  // Create button
+  Widget okButton = TextButton(
+    child: const Text("OK"),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(color: Colors.black38, width: 0)),
+    title: const Text("Something went wrong!!"),
+    content: Text("Error: $error"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showAlertDialog(
+    BuildContext context, String title, String content, bool isFeedback) {
+  // Create button
+  Widget okButton = TextButton(
+    child: const Text("OK"),
+    onPressed: () {
+      Navigator.of(context).pop();
+      if (isFeedback) {
+        Navigator.of(context).pop();
+      }
+    },
+  );
+
+  // Create AlertDialog
+  AlertDialog alert = AlertDialog(
+    shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(20),
+        borderSide: const BorderSide(color: Colors.black38, width: 0)),
+    title: Text(title),
+    content: Text(content),
+    // title: const Text("Photo not selected"),
+    // content: const Text("You haven't selected any picture."),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}

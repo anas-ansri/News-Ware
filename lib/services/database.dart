@@ -224,4 +224,13 @@ class Db {
     // print(articles);
     return articles;
   }
+
+  Future sendFeedback(
+      String type, String name, String email, String description) async {
+    uid = FirebaseAuth.instance.currentUser!.uid;
+    final timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
+    // bool isExist = false;
+    var ref = database.ref().child("feedback").child(type).child(timeStamp);
+    await ref.set({"name": name, "email": email, "description": description});
+  }
 }
