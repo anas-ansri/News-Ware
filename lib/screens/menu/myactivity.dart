@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:news_ware/constants.dart';
 import 'package:news_ware/widgets/loading.dart';
 // import 'package:news_ware/helper/loading.dart';
 
@@ -15,17 +17,22 @@ class MyActivity extends StatelessWidget {
       appBar: AppBar(
         title: const Text("My Activity"),
         centerTitle: true,
-        backgroundColor: backgroundColor,
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back),
-        //   onPressed: () {},
-        // ),
+        backgroundColor: kPrimaryColor,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
       backgroundColor: Colors.grey[200],
       body: Center(
-        child: const Text(
+        child: Text(
           "Coming Soon",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50.0),
+          style: GoogleFonts.sourceCodePro(
+              fontWeight: FontWeight.bold,
+              fontSize: 30.0,
+              fontStyle: FontStyle.italic),
         ),
       ),
       // body: Image(

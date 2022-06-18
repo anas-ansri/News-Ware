@@ -1,6 +1,7 @@
 // import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:hexcolor/hexcolor.dart';
 import 'package:news_ware/constants.dart';
 import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/models/user.dart';
@@ -14,15 +15,14 @@ import 'package:news_ware/widgets/navigation_drawer_widget.dart';
 import 'package:news_ware/widgets/search_page.dart';
 
 class HomeScreen extends StatefulWidget {
-  int selectedIndex = 0;
-  HomeScreen({Key? key, required this.selectedIndex}) : super(key: key);
+  int selectedIndex;
+  HomeScreen({Key? key, this.selectedIndex = 0}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Color backgroundColor = const Color(0xFF0D6EFD);
   PageController pageController = PageController();
   UserData? userData;
 
@@ -62,12 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 //App Bar
                 appBar: AppBar(
-                  title: const Text(
-                    "News Ware",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  title: appTitle,
                   centerTitle: true,
-                  backgroundColor: backgroundColor,
+                  backgroundColor: kPrimaryColor,
                   elevation: 0,
                   actions: [
                     IconButton(
@@ -104,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottomNavigationBar: Theme(
                   data: Theme.of(context).copyWith(
                     // sets the background color of the `BottomNavigationBar`
-                    canvasColor: backgroundColor,
+                    canvasColor: HexColor("#14246c"),
                     // sets the active color of the `BottomNavigationBar` if `Brightness` is light
                     // primaryColor: Colors.lightBlue,
                     // textTheme: Theme.of(context).textTheme.copyWith(

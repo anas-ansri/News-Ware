@@ -29,7 +29,7 @@ class _NewsSettingState extends State<NewsSetting> {
         elevation: 0.0,
         title: const Text("News Setting"),
         centerTitle: true,
-        backgroundColor: backgroundColor,
+        backgroundColor: kPrimaryColor,
         // leading: IconButton(
         //   icon: const Icon(Icons.arrow_back),
         //   onPressed: () {},
@@ -42,13 +42,13 @@ class _NewsSettingState extends State<NewsSetting> {
               userData = snapshot.data;
               return Container(
                 padding: const EdgeInsets.fromLTRB(20, 50, 10, 0),
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text("Choose your country",
-                        textAlign: TextAlign.left,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w600,
                             color: Colors.black)),
                     const SizedBox(
@@ -72,7 +72,7 @@ class _NewsSettingState extends State<NewsSetting> {
                 ),
               );
             } else {
-              return const Center(
+              return Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
                 ),

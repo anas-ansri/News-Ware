@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:news_ware/constants.dart';
 
-class RoundedButton extends StatelessWidget {
+class RoundedButton extends StatefulWidget {
   final String text;
   final VoidCallback press;
   final Color color, textColor;
+  final double fontSize;
+
   const RoundedButton({
     Key? key,
     required this.text,
     required this.press,
     this.color = kPrimaryColor,
+    this.fontSize = 30,
     this.textColor = Colors.white,
   }) : super(key: key);
 
+  @override
+  State<RoundedButton> createState() => _RoundedButtonState();
+}
+
+class _RoundedButtonState extends State<RoundedButton> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,20 +35,20 @@ class RoundedButton extends StatelessWidget {
   }
 
   //Used:ElevatedButton as FlatButton is deprecated.
-  //Here we have to apply customizations to Button by inheriting the styleFrom
-
   Widget newElevatedButton() {
     return ElevatedButton(
       child: Text(
-        text,
-        style: TextStyle(color: textColor),
+        widget.text,
+        style: TextStyle(color: widget.textColor, fontSize: widget.fontSize),
       ),
-      onPressed: press,
+      onPressed: widget.press,
       style: ElevatedButton.styleFrom(
-          primary: color,
+          primary: widget.color,
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
           textStyle: TextStyle(
-              color: textColor, fontSize: 14, fontWeight: FontWeight.w500)),
+              color: widget.textColor,
+              fontSize: 14,
+              fontWeight: FontWeight.w500)),
     );
   }
 }

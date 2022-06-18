@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:news_ware/constants.dart';
 
 class LoadingSplash extends StatefulWidget {
   const LoadingSplash({Key? key}) : super(key: key);
@@ -12,56 +14,71 @@ class _LoadingSplashState extends State<LoadingSplash> {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Theme.of(context).colorScheme.secondary,
-              Theme.of(context).primaryColor
-            ],
-            begin: const FractionalOffset(0, 0),
-            end: const FractionalOffset(1.0, 0.0),
-            stops: const [0.0, 1.0],
-            tileMode: TileMode.clamp,
-          ),
-        ),
+        color: kPrimaryColor,
+        width: double.maxFinite,
+        height: double.maxFinite,
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     colors: [
+        //       // Theme.of(context).colorScheme.secondary,
+        //       Colors.white,
+        //       Theme.of(context).primaryColor
+        //     ],
+        //     begin: const FractionalOffset(0, 0),
+        //     end: const FractionalOffset(1.0, 0.0),
+        //     stops: const [0.0, 1.0],
+        //     tileMode: TileMode.clamp,
+        //   ),
+        // ),
         child: AnimatedOpacity(
           opacity: 1.0,
-          duration: Duration(milliseconds: 1200),
+          duration: const Duration(milliseconds: 1200),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: 140.0,
-                width: 140.0,
-                child: const Center(
-                  child: ClipOval(
-                    child: Icon(
-                      Icons.newspaper,
-                      size: 100,
-                    ), //put your logo here
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        blurRadius: 2.0,
-                        offset: const Offset(5.0, 3.0),
-                        spreadRadius: 2.0,
-                      )
-                    ]),
+              SizedBox(
+                height: 30.0 * getHeightValue(context),
               ),
-              Padding(padding: EdgeInsets.only(top: 50.0)),
-              Text(
-                "News Ware",
-                style: TextStyle(fontSize: 30.0, color: Colors.white),
+              SizedBox(
+                height: 120.0,
+                width: 120.0,
+                child: Center(
+                    // child: ClipOval(
+                    child: Image.asset(
+                        "assets/icons/app_icon.png") //put your logo here
+                    // ),
+                    ),
+                // decoration: BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: Colors.white,
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: Colors.black.withOpacity(0.3),
+                //         blurRadius: 2.0,
+                //         offset: const Offset(5.0, 3.0),
+                //         spreadRadius: 2.0,
+                //       )
+                // ]),
               ),
-              Padding(padding: EdgeInsets.only(top: 50.0)),
-              CircularProgressIndicator(
-                backgroundColor: Colors.white,
-                strokeWidth: 1,
+              const Padding(padding: EdgeInsets.only(top: 30.0)),
+              const Text(
+                "NEWSWARE",
+                style: TextStyle(
+                    fontSize: 25,
+                    // fontStyle: FontStyle.italic,
+                    fontFamily: "AbrilFatface",
+                    // fontStyle: FontStyle.italic,
+                    // fontWeight: FontWeight.bold,
+                    color: Colors.white), ////HexColor("#fc6424")
+              ),
+              // const Padding(padding: EdgeInsets.only(top: 50.0)),
+              const Spacer(),
+              LoadingAnimationWidget.inkDrop(
+                color: Colors.white,
+                size: 50,
+              ),
+              SizedBox(
+                height: 20.0 * getHeightValue(context),
               ),
             ],
           ),

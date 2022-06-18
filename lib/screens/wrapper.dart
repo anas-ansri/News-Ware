@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:news_ware/helper/loading.dart';
 import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/screens/authenticate/Signup/signup_screen.dart';
 import 'package:news_ware/screens/authenticate/verify_email_page.dart';
-import 'package:news_ware/screens/home/home.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -16,12 +14,12 @@ class Wrapper extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return VerifyEmailPage();
+          return const VerifyEmailPage();
           // return HomeScreen(
           //   selectedIndex: 0,
           // );
         } else if (snapshot.connectionState == ConnectionState.waiting) {
-          return LoadingSplash();
+          return const LoadingSplash();
         }
         // else if (snapshot.hasError) {
         //   print("Error aa gya");
@@ -30,7 +28,7 @@ class Wrapper extends StatelessWidget {
         //   );
         // }
         else {
-          return SignUpScreen();
+          return const SignUpScreen();
         }
       },
     );

@@ -51,7 +51,7 @@ class DatabaseService {
         'email': email,
         'photoUrl': photoUrl,
         'country': "in",
-        'method': method
+        'method': method,
       });
     }
   }
@@ -232,5 +232,40 @@ class Db {
     // bool isExist = false;
     var ref = database.ref().child("feedback").child(type).child(timeStamp);
     await ref.set({"name": name, "email": email, "description": description});
+  }
+
+  Future<List<String>?> getApiKeys() async {
+    List<String> apiKeys = [];
+
+    var ref = FirebaseDatabase.instance.ref().child("apiKeyList");
+    await ref.once().then((DatabaseEvent databaseEvent) {
+      var docs = databaseEvent.snapshot.children;
+      for (var element in docs) {
+        // Map<String, dynamic> data = jsonDecode(jsonEncode(element.value));
+        // var article = ArticleModel.fromJson(Map<String, dynamic>.from(data));
+        String apiKey = jsonDecode(jsonEncode(element.value));
+
+        // var article = ArticleModel.fromJson(Map<String, dynamic>.from(data));
+        // print(article.title);
+        // ArticleModel article = ArticleModel(
+        //   author: articleData.author,
+        //   description: articleData.description,
+        //   sourceName: articleData.sourceName,
+        //   publishedAt: articleData.publishedAt,
+        //   title: articleData.title,
+        //   url: articleData.url,
+        //   urlToImage: articleData.url,
+        // );
+
+        // List<ArticleModel> article =
+        // print(article);
+        print(apiKey);
+        print("object");
+        apiKeys.add(apiKey);
+      }
+    });
+    // print(articles);
+    print(apiKeys.length);
+    return apiKeys;
   }
 }

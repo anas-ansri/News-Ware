@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:news_ware/constants.dart';
 import 'package:news_ware/screens/home/home.dart';
 import 'package:news_ware/screens/menu/about_us.dart';
 import 'package:news_ware/screens/menu/feedback.dart';
 import 'package:news_ware/screens/menu/myactivity.dart';
 import 'package:news_ware/screens/menu/news_setting.dart';
-import 'package:news_ware/screens/menu/user_page.dart';
 import 'package:news_ware/services/auth.dart';
-import 'package:provider/provider.dart';
-
-import '../services/google_sign_in.dart';
 
 typedef VoidCallback = void Function();
 
@@ -30,8 +27,6 @@ class NavigationDrawerWidget extends StatefulWidget {
 
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   final AuthService _auth = AuthService();
-
-  final Color backgroundColor = const Color(0xFF0D6EFD);
 
   final padding = const EdgeInsets.symmetric(horizontal: 20);
 
@@ -61,43 +56,36 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         break;
     }
   }
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
+    double widthValue = MediaQuery.of(context).size.width * 0.01;
     //Variables for Header in draw
     return Drawer(
       child: Material(
-          color: backgroundColor,
+          color: kPrimaryColor,
           child: ListView(
             children: [
               const SizedBox(
                 height: 40,
               ),
-              // Row(
-              //   children: [
-              //     IconButton(
-              //         onPressed: () {
-              //           Navigator.of(context).pop();
-              //         },
-              //         icon: const Icon(
-              //           Icons.arrow_back,
-              //           color: Colors.white,
-              //         ))
-              //   ],
-              // ),
               buildHeader(
                   urlImage: widget.urlImage,
                   name: widget.name,
                   email: widget.email,
+                  widthValue: widthValue,
                   // onClicked: () => Navigator.of(context).push(MaterialPageRoute(
                   //     builder: (context) =>
                   //         UserPage(name: name, urlImage: urlImage)))
                   onClicked: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HomeScreen(selectedIndex: 2)))),
+                      builder: (context) => HomeScreen(selectedIndex: 2))
+                  )
+      ),
               const SizedBox(
                 height: 20,
               ),
-
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -136,7 +124,17 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                     ),
                     ListTile(
                       onTap: (() async {
-                        await _auth.signOut();
+
+
+
+
+
+                          dynamic result = await _auth.signOut();
+                          if(result != null){
+                            showErrorAlert(context, result);
+                          }
+
+
                       }),
                       title: const Text(
                         "Sign Out ",
@@ -151,64 +149,72 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           )),
     );
   }
-}
 
-Widget buildMenuItem(
-    {required String text, required IconData icon, VoidCallback? onClick}) {
-  const color = Colors.white;
-  const hoverColor = Colors.white24;
+  Widget buildMenuItem(
+      {required String text, required IconData icon, VoidCallback? onClick}) {
+    const color = Colors.white;
+    const hoverColor = Colors.white24;
 
-  return ListTile(
-    onTap: onClick,
-    leading: Icon(
-      icon,
-      color: color,
-    ),
-    title: Text(
-      text,
-      style: const TextStyle(color: color),
-    ),
-    hoverColor: hoverColor,
-  );
-}
+    return ListTile(
+      onTap: onClick,
+      leading: Icon(
+        icon,
+        color: color,
+      ),
+      title: Text(
+        text,
+        style: const TextStyle(color: color),
+      ),
+      hoverColor: hoverColor,
+    );
+  }
 
-Widget buildHeader(
-        {required String urlImage,
-        required String name,
-        required String email,
-        required VoidCallback? onClicked}) =>
-    InkWell(
-      onTap: onClicked,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 10),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-          child: Row(
-            children: [
-              //Profile pic avatar
-              CircleAvatar(radius: 30, backgroundImage: NetworkImage(urlImage)),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildHeader(
+          {required String urlImage,
+          required String name,
+          required String email,
+          required VoidCallback? onClicked,
+          required double widthValue}) =>
+      InkWell(
+        onTap: onClicked,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 10),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Row(
                 children: [
-                  Text(
-                    name,
-                    style: const TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  //Profile pic avatar
+                  CircleAvatar(
+                      radius: widthValue * 10,
+                      backgroundImage: NetworkImage(urlImage)),
                   const SizedBox(
-                    height: 4,
+                    width: 10,
                   ),
-                  Text(
-                    email,
-                    style: const TextStyle(fontSize: 14, color: Colors.white),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                            fontSize: widthValue * 7, color: Colors.white),
+                      ),
+                      const SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        email,
+                        style: TextStyle(
+                            fontSize: widthValue * 4, color: Colors.white),
+                      ),
+                    ],
                   ),
+                  const SizedBox(width: 5)
                 ],
               ),
-              const SizedBox(width: 5)
-            ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+}

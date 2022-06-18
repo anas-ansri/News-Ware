@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:news_ware/models/user.dart';
 // import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/loading.dart';
-
 import '../services/news.dart';
 import '../models/article_model.dart';
 import 'news_card.dart';
@@ -20,7 +19,6 @@ class _SearchPageState extends State<SearchPage> {
   List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
   UserData? userData;
   News news = News();
-
   @override
   Widget build(BuildContext context) {
     // String uid = FirebaseAuth.instance.currentUser!.uid;

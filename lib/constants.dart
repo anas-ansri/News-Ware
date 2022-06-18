@@ -1,9 +1,55 @@
 import 'package:flutter/material.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
-const kPrimaryColor = Color(0xFF0D6EFD);
-const kPrimaryLightColor = Color(0xFFF1E6FF);
+//Primary Color: 0xFF0D6EFD
+//Font : Source Sans Pro
+
+const kPrimaryColor = Color.fromRGBO(20, 36, 108, 1);
+//  Color.fromRGBO(4, 92, 204, 0.9);
+
+// Color(0xFF0D6EFD);
+Widget appTitle = const Text(
+  "NEWSWARE",
+  style: TextStyle(
+      // fontStyle: FontStyle.italic,
+      fontFamily: "AbrilFatface",
+      // fontStyle: FontStyle.italic,
+      // fontWeight: FontWeight.bold,
+      color: Colors.white), ////HexColor("#fc6424")
+);
+// Row(
+//   mainAxisAlignment: MainAxisAlignment.center,
+//   children: [
+//     Text(
+//       "NEWSWARE",
+//       style: TextStyle(
+//           fontWeight: FontWeight.bold,
+//           color: Colors.white), ////HexColor("#fc6424")
+//     ),
+//     // Text(
+//     //   "WARE",
+//     //   style: GoogleFonts.pacifico(
+//     //       fontWeight: FontWeight.bold,
+//     //       color: Colors.white), ////HexColor("#fc6424")
+//     // ),
+//   ],
+// );
+
+const kPrimaryLightColor = Color.fromARGB(255, 165, 183, 255);
+const secondryColor = Color.fromARGB(255, 137, 157, 243);
+// const primaryFont = FontFa,
 
 const double defaultPadding = 16.0;
+
+getHeightValue(BuildContext context) {
+  double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
+  return unitHeightValue;
+}
+
+getWidthValue(BuildContext context) {
+  double unitWidthtValue = MediaQuery.of(context).size.height * 0.01;
+  return unitWidthtValue;
+}
 
 const List<String> allCountries = [
   "ae",

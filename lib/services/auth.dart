@@ -37,18 +37,24 @@ class AuthService {
   Future registerWithEmail(
       String email, String password, String displayName) async {
     // try {
-    UserCredential result = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    final User? user = result.user;
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      final User? user = result.user;
 
-    await DatabaseService(uid: user!.uid).userSetup(
-        displayName,
-        user.email,
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-        "Normal");
-    _userFromFirebaseUser(user);
+      await DatabaseService(uid: user!.uid).userSetup(
+          displayName,
+          user.email,
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          "Normal");
+      _userFromFirebaseUser(user);
+      return result;
+    } on Exception catch (e) {
+      // TODO
+      return null;
+    }
     // } catch (e) {
     //   print(e.toString());
     // }
@@ -57,14 +63,15 @@ class AuthService {
 //sign in with email
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      print(email);
+      // print(email);
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       final User? user = result.user;
       _userFromFirebaseUser(user!);
-    } catch (e) {
-      print(e.toString());
       return null;
+    } catch (e) {
+      // print(e.toString());
+      return e;
     }
   }
 
@@ -93,15 +100,24 @@ class AuthService {
 //sign out
   Future signOut() async {
     try {
-      try {
-        await googleSignIn.disconnect();
-      } catch (e) {
-        print(e);
-      }
+      // try {
+      //
+      //   await googleSignIn.disconnect();
+      //
+      //
+      // } catch (e) {
+      //
+      //   return;
+      // }
 
-      return await _auth.signOut();
+      await _auth.signOut();
+
+
+      return null;
     } catch (e) {
-      print(e.toString());
+
+      return e;
+
     }
   }
 

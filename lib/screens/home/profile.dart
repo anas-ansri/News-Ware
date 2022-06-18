@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news_ware/constants.dart';
 import 'package:news_ware/helper/rounded_button.dart';
-import 'package:news_ware/helper/rounded_input_field.dart';
+// import 'package:news_ware/helper/rounded_input_field.dart';
 import 'package:news_ware/helper/text_field_widget.dart';
 import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/profile_widget.dart';
 
 class Profile extends StatefulWidget {
-  UserData? userData;
+  final UserData? userData;
 
-  Profile({Key? key, required this.userData}) : super(key: key);
+  const Profile({Key? key, required this.userData}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -29,21 +29,27 @@ class _ProfileState extends State<Profile> {
       children: [
         // Spacer(),
         SizedBox(
-          height: 150,
+          height: 40,
         ),
         ProfileWidget(
           imagePath: widget.userData!.photoUrl,
-          onClicked: () async {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => EditProfilePage(
-                        userData: widget.userData,
-                      )),
-            );
-          },
         ),
         const SizedBox(height: 24),
         buildName(widget.userData!),
+        Padding(
+          padding: const EdgeInsets.all(45.0),
+          child: RoundedButton(
+              fontSize: 2.5 * getWidthValue(context),
+              text: "Edit",
+              press: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => EditProfilePage(
+                            userData: widget.userData,
+                          )),
+                );
+              }),
+        )
       ],
     );
   }
@@ -64,8 +70,8 @@ class _ProfileState extends State<Profile> {
 }
 
 class EditProfilePage extends StatefulWidget {
-  EditProfilePage({Key? key, required this.userData}) : super(key: key);
-  UserData? userData;
+  const EditProfilePage({Key? key, required this.userData}) : super(key: key);
+  final UserData? userData;
 
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -104,7 +110,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             SizedBox(
               height: 60,
             ),
-            ProfileWidget(
+            EditProfileWidget(
               imagePath: (_newPhotoUrl == ""
                   ? widget.userData!.photoUrl
                   : _newPhotoUrl),
@@ -115,7 +121,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 final picker = ImagePicker();
                 final pickedFile = await picker.pickImage(
                   source: ImageSource.gallery,
-                  imageQuality: 25,
+                  imageQuality: 10,
                 );
                 if (pickedFile == null) {
                   return showAlertDialog(context, "Photo not selected",
@@ -127,6 +133,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       'UserData/$uid/profile_pic.jpg'); // Modify this path/string as your need
                   UploadTask uploadTask = reference.putFile(image);
                   downloadURL = await (await uploadTask).ref.getDownloadURL();
+                  if (!mounted) return;
                   setState(() {
                     _newPhotoUrl = downloadURL;
                     // print(downloadURL);
@@ -168,6 +175,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             const SizedBox(height: 24),
             RoundedButton(
+                fontSize: getWidthValue(context) * 2.5,
                 text: "Save",
                 press: () async {
                   if (_newName != "") {

@@ -1,6 +1,7 @@
 // import 'dart:html';
 
 // import 'package:email_validator/email_validator.dart';
+import 'package:flutter/rendering.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -23,7 +24,7 @@ class FeedbackPage extends StatefulWidget {
 class _FeedbackPageState extends State<FeedbackPage> {
   final TextEditingController _messageController = TextEditingController();
 
-  final double minValue = 8.0;
+  final double minValue = 5.0;
   final _feedbackTypeList = <String>["Comments", "Bugs", "Questions"];
 
   String _feedbackType = "";
@@ -61,27 +62,28 @@ class _FeedbackPageState extends State<FeedbackPage> {
               "Write Us",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 48.0,
+                  fontSize: 40.0,
                   color: Colors.white),
             ),
             SizedBox(
-              width: 110.0,
+              width: 120.0,
               child: Container(
-                height: 6,
-                color: Colors.orange,
+                height: 5,
+                color: secondryColor,
               ),
             ),
             SizedBox(
               height: minValue * 4,
             ),
             Text(
-              "Dear User, Feel free to write us. Your feedback is crucial to understanding how to add value to our app and improve user satisfaction..",
-              style: TextStyle(fontSize: 16.0, color: Colors.grey[200]),
+              "Dear User, Feel free to write us. Your feedback is crucial to understanding how to add value to our app and improve user satisfaction.",
+              style: TextStyle(
+                  fontSize: 2.0 * getWidthValue(context),
+                  color: Colors.grey[200]),
             ),
           ],
         ),
-        decoration:
-            const BoxDecoration(color: Colors.black87) //Colors.black87),
+        decoration: const BoxDecoration(color: kPrimaryColor) //Colors.black87),
         );
   }
 
@@ -89,37 +91,41 @@ class _FeedbackPageState extends State<FeedbackPage> {
     return Container(
       padding: EdgeInsets.symmetric(
           vertical: minValue * 2, horizontal: minValue * 3),
-      child: Row(
-        children: <Widget>[
-          const Text(
-            "Select feedback type",
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(
-            width: minValue * 2,
-          ),
-          Expanded(
-              child: Align(
-            alignment: Alignment.centerRight,
-            child: DropdownButton<String>(
-              onChanged: (type) {
-                setState(() {
-                  _feedbackType = type!;
-                });
-              },
-              hint: Text(
-                _feedbackType,
-                style: const TextStyle(fontSize: 16.0),
-              ),
-              items: _feedbackTypeList
-                  .map((type) => DropdownMenuItem<String>(
-                        child: Text(type),
-                        value: type,
-                      ))
-                  .toList(),
+      child: SafeArea(
+        child: Row(
+          children: <Widget>[
+            Text(
+              "Select feedback type",
+              style: TextStyle(
+                  fontSize: 2.0 * getWidthValue(context),
+                  fontWeight: FontWeight.bold),
             ),
-          ))
-        ],
+            SizedBox(
+              width: 6,
+            ),
+            Expanded(
+                child: Align(
+              alignment: Alignment.centerRight,
+              child: DropdownButton<String>(
+                onChanged: (type) {
+                  setState(() {
+                    _feedbackType = type!;
+                  });
+                },
+                hint: Text(
+                  _feedbackType,
+                  style: TextStyle(fontSize: 2.0 * getWidthValue(context)),
+                ),
+                items: _feedbackTypeList
+                    .map((type) => DropdownMenuItem<String>(
+                          child: Text(type),
+                          value: type,
+                        ))
+                    .toList(),
+              ),
+            ))
+          ],
+        ),
       ),
     );
   }
@@ -143,7 +149,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 EdgeInsets.symmetric(vertical: minValue, horizontal: minValue),
             hintText: 'Full Name',
             labelText: 'Full  Name',
-            labelStyle: const TextStyle(fontSize: 16.0, color: Colors.black87)),
+            labelStyle: const TextStyle(fontSize: 13.0, color: Colors.black87)),
       ),
     );
   }
@@ -167,7 +173,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
             contentPadding:
                 EdgeInsets.symmetric(vertical: minValue, horizontal: minValue),
             labelText: 'Email',
-            labelStyle: const TextStyle(fontSize: 16.0, color: Colors.black87)),
+            labelStyle: const TextStyle(fontSize: 13.0, color: Colors.black87)),
       ),
     );
   }
@@ -187,7 +193,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
             labelText: 'Description',
             contentPadding:
                 EdgeInsets.symmetric(vertical: minValue, horizontal: minValue),
-            labelStyle: const TextStyle(fontSize: 16.0, color: Colors.black87)),
+            labelStyle: const TextStyle(fontSize: 13.0, color: Colors.black87)),
       ),
     );
   }
@@ -201,13 +207,13 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Feedback"),
+          title: Text("Feedback"),
           centerTitle: true,
           backgroundColor: kPrimaryColor,
           actions: [
             TextButton(
                 onPressed: () {
-                  if (_name != "" || _email != "" || _description != "") {
+                  if (_name != "" && _email != "" && _description != "") {
                     loading = true;
                     db
                         .sendFeedback(
@@ -222,9 +228,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       // Navigator.of(context).popAndPushNamed();
                     });
                   } else {
-                    setState(() {
-                      error = "Please enter all information";
-                    });
+                    showAlertDialog(context, "Something went wrong!",
+                        "Please enter information in all fields.", false);
                   }
                 },
                 child: const Icon(
@@ -250,29 +255,32 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   size: 200,
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ListView(
-                  children: <Widget>[
-                    _buildHeader(),
-                    _buildCategory(),
-                    SizedBox(
-                      height: minValue,
-                    ),
-                    _buildName(),
-                    SizedBox(
-                      height: minValue * 3,
-                    ),
-                    _buildEmail(),
-                    SizedBox(
-                      height: minValue * 3,
-                    ),
-                    _buildDescription(),
-                    SizedBox(
-                      height: minValue * 3,
-                    ),
-                    Text(error)
-                  ],
+            : SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      _buildHeader(),
+                      _buildCategory(),
+                      SizedBox(
+                        height: minValue,
+                      ),
+                      _buildName(),
+                      SizedBox(
+                        height: minValue * 3,
+                      ),
+                      _buildEmail(),
+                      SizedBox(
+                        height: minValue * 3,
+                      ),
+                      _buildDescription(),
+                      SizedBox(
+                        height: minValue * 3,
+                      ),
+                      Text(error)
+                    ],
+                  ),
                 ),
               ));
   }

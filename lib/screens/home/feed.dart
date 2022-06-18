@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:news_ware/constants.dart';
 import 'package:news_ware/services/news.dart';
 import 'package:news_ware/models/article_model.dart';
@@ -27,12 +28,15 @@ class _FeedState extends State<Feed> {
       initialIndex: 0,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0.0,
-          backgroundColor: kPrimaryColor,
+          backgroundColor: HexColor("#14246c"),
+          leading: null,
           title: TabBar(
+            labelColor: Colors.white,
             indicatorSize: TabBarIndicatorSize.label,
-            indicatorColor: Colors.white60,
-            indicatorWeight: 5,
+            indicatorColor: Colors.white54,
+            indicatorWeight: 3,
             isScrollable: true,
             tabs: [
               ...categories.map((category) => Tab(
@@ -42,6 +46,7 @@ class _FeedState extends State<Feed> {
             ],
           ),
         ),
+        backgroundColor: Colors.grey[200],
         body: TabBarView(
           physics: const BouncingScrollPhysics(),
           children: [

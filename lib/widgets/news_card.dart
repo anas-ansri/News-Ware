@@ -42,15 +42,19 @@ class _NewsCardState extends State<NewsCard> {
 
   @override
   Widget build(BuildContext context) {
+    double widthValue = getWidthValue(context);
+    // double size = MediaQuery.of(context).size.width;
     DateTime parseDate =
-        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(widget.time);
-    var dateTime = DateTime.parse(parseDate.toString());
-    var dateLocal = dateTime.toLocal();
-    var dateNow = DateTime.now().toLocal();
-    var publishedBefore = dateNow.difference(dateLocal);
+        DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(widget.time).toLocal();
+    // var dateTime = DateTime.parse(parseDate.toString());
+    // var dateLocal = dateTime.toLocal();
+    var dateNow = DateTime.now();
+    var publishedBefore = dateNow.difference(parseDate);
     final timeAgo = DateTime.now().subtract(publishedBefore);
+    final textColor = kPrimaryColor;
 
     return Card(
+      // color: secondryColor,
       shadowColor: Colors.black54,
       margin: const EdgeInsets.all(3),
       shape: OutlineInputBorder(
@@ -75,14 +79,20 @@ class _NewsCardState extends State<NewsCard> {
                   MaterialPageRoute(
                       builder: (context) => ArticleView(
                             articleUrl: widget.url,
+                            title: widget.title,
+                            urlImage: widget.urlImage,
+                            url: widget.url,
                           )));
             },
-            child: FancyShimmerImage(
-              imageUrl: widget.urlImage,
-              boxFit: BoxFit.fill,
-              width: 400,
-              height: 250,
-              errorWidget: Image.asset("assets/images/breaking.jpg"),
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: FancyShimmerImage(
+                imageUrl: widget.urlImage,
+                boxFit: BoxFit.fill,
+                width: widthValue * 100,
+                height: widthValue * 75,
+                errorWidget: Image.asset("assets/images/breaking.jpg"),
+              ),
             ),
           ),
           Container(
@@ -145,9 +155,11 @@ class _NewsCardState extends State<NewsCard> {
                             content: Text(
                               "Article Saved!",
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: kPrimaryColor),
+                              style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            backgroundColor: Colors.white,
+                            backgroundColor: secondryColor,
                             // duration: Duration(seconds: 1),
                           ));
 

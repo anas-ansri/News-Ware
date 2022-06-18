@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ware/constants.dart';
+import 'package:news_ware/helper/rounded_button.dart';
 import 'package:news_ware/screens/home/home.dart';
 import 'package:news_ware/services/auth.dart';
 
@@ -15,7 +16,9 @@ class VerifyEmailPage extends StatefulWidget {
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
   bool isEmailVerified = true;
+  bool canResend = false;
   Timer? timer;
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -51,44 +54,93 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   Future sendVerificationEmail() async {
     try {
-      final user = FirebaseAuth.instance.currentUser;
       // await firebase.auth().currentUser.sendEmailVerification();
 
-      await user
-          ?.sendEmailVerification()
-          .then((value) => print("Verification sent! to ${user.email}"));
+      await user?.sendEmailVerification();
+      if (!mounted) return;
+      setState(() {
+        canResend = false;
+      });
+
+      await Future.delayed(const Duration(seconds: 10));
+
+      if (!mounted) return;
+      setState(() {
+        canResend = true;
+      });
     } on Exception catch (e) {
       // TODO
       showErrorAlert(context, e.toString());
     }
   }
 
-  AuthService _auth = AuthService();
-
   @override
   Widget build(BuildContext context) => isEmailVerified
       ? HomeScreen(selectedIndex: 0)
       : Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text("Verify your email"),
+            title: const Text("Verify your email"),
             centerTitle: true,
             elevation: 0,
             backgroundColor: kPrimaryColor,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () async {
-                await _auth.signOut();
-              },
-            ),
+            // leading: IconButton(
+            //   icon: Icon(Icons.arrow_back),
+            //   onPressed: () async {
+            //     await _auth.signOut();
+            //   },
+            // ),
           ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Text("Verification email is sent to you!!",
-                  // textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20.0),
-                  textAlign: TextAlign.center),
-            ],
-          ));
+          body: ListView(
+              padding:const EdgeInsets.all(20.0),
+              // child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Image.asset(
+                    "assets/images/success.gif",
+                    width: 15.0 * getHeightValue(context),
+                    height: 15.0 * getHeightValue(context),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text("A Verification email is sent to ${user!.email}",
+                      // textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 4.0 * getHeightValue(context),
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                      "Please verify the email and come back.\nIf you didn't find email, don't forget to check your spam box and If you stil did not find email, click on resend button given below.\nRemember: You can request for verification email after 10 seconds.",
+                      // textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 2.0 * getHeightValue(context)),
+                      textAlign: TextAlign.center),
+                  // Divider(),
+                  SizedBox(height: 30,),
+                  RoundedButton(
+                      fontSize: 2.5 * getHeightValue(context),
+                      text: "Resend email",
+                      textColor: Colors.white,
+                      press: () {
+                        sendVerificationEmail();
+                      }),
+                  RoundedButton(
+                      fontSize: 2.5 * getHeightValue(context),
+                      text: "Cancel",
+                      color: secondryColor,
+                      press: () {
+                        FirebaseAuth.instance.signOut();
+                      })
+                ],
+              ),
+
+          );
 }

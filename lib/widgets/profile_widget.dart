@@ -3,10 +3,77 @@ import 'package:flutter/material.dart';
 
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
-  final VoidCallback onClicked;
   final bool isEdit;
 
   ProfileWidget({
+    Key? key,
+    required this.imagePath,
+    this.isEdit = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
+
+    return Center(
+      child: Stack(
+        children: [
+          buildImage(),
+          // Positioned(
+          //   bottom: 0,
+          //   right: 4,
+          //   child: buildEditIcon(color),
+          // ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildImage() {
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: GestureDetector(
+          onTap: () {},
+          child: FancyShimmerImage(
+            imageUrl: imagePath,
+            boxFit: BoxFit.cover,
+            width: 128,
+            errorWidget: Image.asset("assets/images/placeholder.png"),
+            height: 128,
+          ),
+        ),
+        // child: Ink.image(
+        //   image: image,
+        //   fit: BoxFit.cover,
+        //   width: 128,
+        //   height: 128,
+        //   child: InkWell(onTap: onClicked),
+        // ),
+      ),
+    );
+  }
+
+  Widget buildCircle({
+    required Widget child,
+    required double all,
+    required Color color,
+  }) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(all),
+          color: color,
+          child: child,
+        ),
+      );
+}
+
+class EditProfileWidget extends StatelessWidget {
+  final String imagePath;
+  final bool isEdit;
+  final VoidCallback onClicked;
+
+  EditProfileWidget({
     Key? key,
     required this.imagePath,
     this.isEdit = false,
@@ -37,19 +104,23 @@ class ProfileWidget extends StatelessWidget {
     return ClipOval(
       child: Material(
         color: Colors.transparent,
-        // child: FancyShimmerImage(
-        //   imageUrl: imagePath,
-        //   boxFit: BoxFit.cover,
+        child: GestureDetector(
+          onTap: onClicked,
+          child: FancyShimmerImage(
+            imageUrl: imagePath,
+            boxFit: BoxFit.cover,
+            width: 128,
+            errorWidget: Image.asset("assets/images/placeholder.png"),
+            height: 128,
+          ),
+        ),
+        // child: Ink.image(
+        //   image: image,
+        //   fit: BoxFit.cover,
         //   width: 128,
         //   height: 128,
-        // ),c
-        child: Ink.image(
-          image: image,
-          fit: BoxFit.cover,
-          width: 128,
-          height: 128,
-          child: InkWell(onTap: onClicked),
-        ),
+        //   child: InkWell(onTap: onClicked),
+        // ),
       ),
     );
   }

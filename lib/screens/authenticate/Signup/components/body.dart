@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:news_ware/constants.dart';
 import 'package:news_ware/helper/already_have_an_account_acheck.dart';
-import 'package:news_ware/helper/loading.dart';
+import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/helper/rounded_button.dart';
 import 'package:news_ware/helper/rounded_input_field.dart';
 import 'package:news_ware/helper/rounded_password_field.dart';
@@ -11,21 +11,31 @@ import 'package:news_ware/screens/authenticate/Signup/components/background.dart
 import 'package:news_ware/screens/authenticate/Signup/components/or_divider.dart';
 import 'package:news_ware/services/auth.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   AuthService _auth = AuthService();
+
   final _formKey = GlobalKey<FormState>();
+
   bool loading = false;
 
   String email = '';
+
   String name = '';
+
   String password = '';
+
   String error = '';
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return loading
-        ? Loading()
+        ? LoadingSplash()
         : Background(
             child: SingleChildScrollView(
               child: Form(
@@ -46,6 +56,13 @@ class Body extends StatelessWidget {
 
                     RoundedInputField(
                       hintText: "Your Name",
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Name can not be empty";
+                        } else {
+                          return null;
+                        }
+                      },
                       onChanged: (value) {
                         name = value;
                       },
@@ -66,7 +83,7 @@ class Body extends StatelessWidget {
                     RoundedPasswordField(
                       validator: (value) {
                         if (value!.isEmpty || value.length < 8) {
-                          return "Please enter a valid password";
+                          return "Please enter a valid password, password should contain at least 8 letters.";
                         } else {
                           return null;
                         }
@@ -77,14 +94,25 @@ class Body extends StatelessWidget {
                     ),
                     Text(error),
                     RoundedButton(
+                      fontSize: getWidthValue(context) * 2.5,
                       text: "SIGNUP",
                       press: () async {
+                        // loading = true;
                         try {
                           if (_formKey.currentState!.validate()) {
-                            await _auth.registerWithEmail(
+                            setState(() {
+                              loading = true;
+                            });
+                            dynamic result = await _auth.registerWithEmail(
                                 email, password, name);
+                            if (result == null) {
+                              setState(() {
+                                error = "Please enter valid credentials";
+                                loading = false;
+                              });
+                            }
                           } else {
-                            const Text("Please Enter valid credancials");
+                            const Text("Please Enter valid credentials");
                           }
                         } catch (e) {
                           error = e.toString();
@@ -118,9 +146,8 @@ class Body extends StatelessWidget {
                           //     Provider.of<AuthService>(context, listen: false);
                           // provider.googleLogIn();
                           // try {
-                          await _auth
-                              .googleLogIn()
-                              .then((value) => {Navigator.of(context).pop()});
+                          await _auth.googleLogIn();
+                          // .then((value) => {Navigator.of(context).pop()});
                           // } on Exception catch (e) {
                           //   // print(e.toString());
                           //   showErrorAlert(context, e.toString());
