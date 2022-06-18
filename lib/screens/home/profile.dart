@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
       physics: const BouncingScrollPhysics(),
       children: [
         // Spacer(),
-        SizedBox(
+        const SizedBox(
           height: 40,
         ),
         ProfileWidget(
@@ -58,12 +58,12 @@ class _ProfileState extends State<Profile> {
         children: [
           Text(
             userData.displayName,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 4),
           Text(
             userData.email,
-            style: TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey),
           )
         ],
       );
@@ -104,10 +104,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
           backgroundColor: kPrimaryColor,
         ),
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 32),
-          physics: BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          physics: const BouncingScrollPhysics(),
           children: [
-            SizedBox(
+            const SizedBox(
               height: 60,
             ),
             EditProfileWidget(
@@ -165,7 +165,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               text: widget.userData!.email,
               onChanged: (email) {},
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(

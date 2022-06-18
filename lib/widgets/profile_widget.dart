@@ -5,7 +5,7 @@ class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
 
-  ProfileWidget({
+  const ProfileWidget({
     Key? key,
     required this.imagePath,
     this.isEdit = false,
@@ -73,7 +73,7 @@ class EditProfileWidget extends StatelessWidget {
   final bool isEdit;
   final VoidCallback onClicked;
 
-  EditProfileWidget({
+  const EditProfileWidget({
     Key? key,
     required this.imagePath,
     this.isEdit = false,
