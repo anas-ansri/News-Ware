@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_ware/models/article_model.dart';
 import 'package:news_ware/services/database.dart';
-import 'package:news_ware/widgets/loading.dart';
+import 'package:news_ware/widgets/card_shimmers.dart';
 import 'package:news_ware/widgets/news_card.dart';
 
 class Saved extends StatefulWidget {

@@ -10,7 +10,7 @@ import 'package:news_ware/screens/home/feed.dart';
 import 'package:news_ware/screens/home/profile.dart';
 import 'package:news_ware/screens/home/saved.dart';
 import 'package:news_ware/services/database.dart';
-import 'package:news_ware/widgets/loading.dart';
+import 'package:news_ware/widgets/card_shimmers.dart';
 import 'package:news_ware/widgets/navigation_drawer_widget.dart';
 import 'package:news_ware/widgets/search_page.dart';
 

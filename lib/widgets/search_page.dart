@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_ware/models/user.dart';
 // import 'package:news_ware/services/database.dart';
-import 'package:news_ware/widgets/loading.dart';
+import 'package:news_ware/widgets/card_shimmers.dart';
 import '../services/news.dart';
 import '../models/article_model.dart';
 import 'news_card.dart';
