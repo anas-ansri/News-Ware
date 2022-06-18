@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/rounded_button.dart';
 // import 'package:news_ware/helper/rounded_input_field.dart';
 import 'package:news_ware/helper/text_field_widget.dart';
 import 'package:news_ware/models/user.dart';
+import 'package:news_ware/screens/other/user_page.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/profile_widget.dart';
 
@@ -32,6 +33,14 @@ class _ProfileState extends State<Profile> {
           height: 40,
         ),
         ProfileWidget(
+          onClick: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => UserPage(
+                name: widget.userData!.displayName,
+                urlImage: widget.userData!.photoUrl,
+              ),
+            ));
+          },
           imagePath: widget.userData!.photoUrl,
         ),
         const SizedBox(height: 24),

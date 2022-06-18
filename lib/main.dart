@@ -2,9 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:news_ware/constants.dart';
-import 'package:news_ware/screens/splash_screen.dart';
+import 'package:news_ware/utils/constants.dart';
+import 'package:news_ware/screens/other/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -98,26 +98,22 @@ class AuthService {
   }
 
 //sign out
-  Future signOut() async {
+  Future signOut(String method) async {
+    print(method);
+    print(method);
+
     try {
-      // try {
-      //
-      //   await googleSignIn.disconnect();
-      //
-      //
-      // } catch (e) {
-      //
-      //   return;
-      // }
-
+      if (method == "Google") {
+        print(method);
+        print(method);
+        print(method);
+        await googleSignIn.disconnect();
+      }
       await _auth.signOut();
-
 
       return null;
     } catch (e) {
-
       return e;
-
     }
   }
 

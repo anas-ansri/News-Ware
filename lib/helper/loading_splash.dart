@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 
 class LoadingSplash extends StatefulWidget {
   const LoadingSplash({Key? key}) : super(key: key);

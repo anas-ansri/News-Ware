@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:hexcolor/hexcolor.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/models/user.dart';
 
@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Scaffold(
                 //Side Bar Menu
                 drawer: NavigationDrawerWidget(
+                    method: userData!.method,
                     name: userData!.displayName,
                     email: user.email!,
                     urlImage: userData!.photoUrl),

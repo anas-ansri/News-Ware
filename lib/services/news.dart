@@ -3,7 +3,7 @@ import 'dart:convert';
 // import 'package:intl/intl.dart';
 // import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 // import 'package:http/http.dart';
 import 'package:news_ware/models/article_model.dart';
 import 'package:http/http.dart' as http;

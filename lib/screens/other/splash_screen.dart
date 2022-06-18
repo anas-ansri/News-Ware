@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/models/user.dart';
-import 'package:news_ware/screens/wrapper.dart';
+import 'package:news_ware/screens/other/wrapper.dart';
 import 'package:news_ware/services/auth.dart';
 import 'package:provider/provider.dart';
 

@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/widgets/card_shimmers.dart';
 // import 'package:news_ware/helper/loading.dart';
 

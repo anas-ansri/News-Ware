@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class ProfileWidget extends StatelessWidget {
   final String imagePath;
   final bool isEdit;
+  final VoidCallback onClick;
 
   const ProfileWidget({
     Key? key,
     required this.imagePath,
     this.isEdit = false,
+    required this.onClick,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class ProfileWidget extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: GestureDetector(
-          onTap: () {},
+          onTap: onClick,
           child: FancyShimmerImage(
             imageUrl: imagePath,
             boxFit: BoxFit.cover,

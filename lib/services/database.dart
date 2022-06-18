@@ -108,13 +108,8 @@ class DatabaseService {
 
   //UserData from snapshot
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    return UserData(
-      uid,
-      snapshot["displayName"],
-      snapshot["email"],
-      snapshot["photoUrl"],
-      snapshot["country"],
-    );
+    return UserData(uid, snapshot["displayName"], snapshot["email"],
+        snapshot["photoUrl"], snapshot["country"], snapshot["method"]);
   }
 
   //Get user doc steam

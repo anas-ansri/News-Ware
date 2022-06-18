@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/screens/home/home.dart';
 import 'package:news_ware/screens/menu/about_us.dart';
 import 'package:news_ware/screens/menu/feedback.dart';
@@ -13,12 +13,14 @@ class NavigationDrawerWidget extends StatefulWidget {
   final String name;
   final String email;
   final String urlImage;
+  final String method;
 
   const NavigationDrawerWidget(
       {Key? key,
       required this.email,
       required this.name,
-      required this.urlImage})
+      required this.urlImage,
+      required this.method})
       : super(key: key);
 
   @override
@@ -56,6 +58,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         break;
     }
   }
+
   bool loading = false;
 
   @override
@@ -80,9 +83,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   //     builder: (context) =>
                   //         UserPage(name: name, urlImage: urlImage)))
                   onClicked: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => HomeScreen(selectedIndex: 2))
-                  )
-      ),
+                      builder: (context) => HomeScreen(selectedIndex: 2)))),
               const SizedBox(
                 height: 20,
               ),
@@ -124,17 +125,11 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                     ),
                     ListTile(
                       onTap: (() async {
+                        dynamic result = await _auth.signOut(widget.method);
 
-
-
-
-
-                          dynamic result = await _auth.signOut();
-                          if(result != null){
-                            showErrorAlert(context, result);
-                          }
-
-
+                        if (result != null) {
+                          showErrorAlert(context, result);
+                        }
                       }),
                       title: const Text(
                         "Sign Out ",

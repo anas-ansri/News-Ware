@@ -5,7 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/rounded_button.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:news_ware/utils/validator.dart' as v;

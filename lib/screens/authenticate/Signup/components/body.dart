@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/already_have_an_account_acheck.dart';
 import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/helper/rounded_button.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Loading extends StatelessWidget {

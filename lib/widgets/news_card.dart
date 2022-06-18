@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:news_ware/constants.dart';
+import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/expandable_text.dart';
-import 'package:news_ware/screens/article_view.dart';
+import 'package:news_ware/screens/other/article_view.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -150,16 +150,15 @@ class _NewsCardState extends State<NewsCard> {
                                 widget.time,
                                 widget.url)
                             .then((value) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text(
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: const Text(
                               "Article Saved!",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: kPrimaryColor,
                                   fontWeight: FontWeight.bold),
                             ),
-                            backgroundColor: secondryColor,
+                            backgroundColor: Colors.grey[300],
                             // duration: Duration(seconds: 1),
                           ));
 
