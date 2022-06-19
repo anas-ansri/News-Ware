@@ -1,8 +1,6 @@
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
@@ -77,24 +75,25 @@ class AuthService {
 
   //Sign In with google
   Future googleLogIn() async {
-    // try {
-    final googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return;
-    _guser = googleUser;
-    final googleAuth = await googleUser.authentication;
-    final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+    try {
+      final googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return;
+      _guser = googleUser;
+      final googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
-    UserCredential result =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    User? user = result.user;
+      UserCredential result =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      User? user = result.user;
 
-    await DatabaseService(uid: user!.uid)
-        .userSetup(user.displayName, user.email, user.photoURL, "Google");
-    _userFromFirebaseUser(user);
-    // } on Exception catch (e) {
-    //   print(e.toString());
-    // }
+      await DatabaseService(uid: user!.uid)
+          .userSetup(user.displayName, user.email, user.photoURL, "Google");
+      _userFromFirebaseUser(user);
+    } on PlatformException catch (e) {
+      print(e.toString());
+      return e;
+    }
   }
 
 //sign out

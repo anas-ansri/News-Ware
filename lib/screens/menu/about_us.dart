@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_ware/services/database.dart';
 import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/my_icons_icons.dart';
 
 class AboutUs extends StatelessWidget {
-  const AboutUs({Key? key}) : super(key: key);
+  AboutUs({Key? key}) : super(key: key);
+  Db db = Db();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class AboutUs extends StatelessWidget {
                       image: DecorationImage(
                           image: AssetImage("assets/images/newsapi.png"),
                           fit: BoxFit.cover)),
-                )
+                ),
               ],
             )
           ],

@@ -21,9 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) {
           return StreamProvider<MyUser?>.value(
-              value: AuthService().user,
-              initialData: null,
-              child: const Wrapper());
+              value: AuthService().user, initialData: null, child: Wrapper());
         }), (route) => false);
       });
     });

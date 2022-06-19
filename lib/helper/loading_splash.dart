@@ -33,8 +33,9 @@ class _LoadingSplashState extends State<LoadingSplash> {
         child: AnimatedOpacity(
           opacity: 1.0,
           duration: const Duration(milliseconds: 1200),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            // child: Column(
+            //   mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
                 height: 30.0 * getHeightValue(context),
@@ -81,6 +82,7 @@ class _LoadingSplashState extends State<LoadingSplash> {
                 height: 20.0 * getHeightValue(context),
               ),
             ],
+            // ),
           ),
         ),
       ),

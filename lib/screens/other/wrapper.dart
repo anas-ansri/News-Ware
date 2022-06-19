@@ -3,13 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/screens/authenticate/Signup/signup_screen.dart';
 import 'package:news_ware/screens/authenticate/verify_email_page.dart';
+import 'package:news_ware/utils/network_check.dart';
 
-class Wrapper extends StatelessWidget {
-  const Wrapper({Key? key}) : super(key: key);
+class Wrapper extends StatefulWidget {
+  Wrapper({Key? key}) : super(key: key);
+
+  @override
+  State<Wrapper> createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
+  NetworkCheck network = NetworkCheck();
 
   @override
   Widget build(BuildContext context) {
     // final user = Provider.of<MyUser?>(context);
+    // if (hasNetwork) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -32,6 +41,10 @@ class Wrapper extends StatelessWidget {
         }
       },
     );
+    // } else {
+    //   return Scaffold(
+    //     body: Center(child: CircularProgressIndicator()),
+    //   );
 
     // if (user == null) {
     //   return LoginScreen();

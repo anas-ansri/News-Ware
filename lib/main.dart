@@ -30,8 +30,6 @@ class MyApp extends StatelessWidget {
           // or from RG
           primary: kPrimaryColor,
           secondary: secondryColor,
-
-          //  const Color(0xFFFFC107),
         ),
       ),
       home: const SplashScreen(),

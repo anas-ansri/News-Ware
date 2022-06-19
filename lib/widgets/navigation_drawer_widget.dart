@@ -53,7 +53,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         break;
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const AboutUs(),
+          builder: (context) => AboutUs(),
         ));
         break;
     }

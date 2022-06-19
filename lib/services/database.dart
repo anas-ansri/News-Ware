@@ -235,6 +235,7 @@ class Db {
     var ref = FirebaseDatabase.instance.ref().child("apiKeyList");
     await ref.once().then((DatabaseEvent databaseEvent) {
       var docs = databaseEvent.snapshot.children;
+
       for (var element in docs) {
         // Map<String, dynamic> data = jsonDecode(jsonEncode(element.value));
         // var article = ArticleModel.fromJson(Map<String, dynamic>.from(data));
@@ -254,13 +255,10 @@ class Db {
 
         // List<ArticleModel> article =
         // print(article);
-        print(apiKey);
-        print("object");
         apiKeys.add(apiKey);
       }
     });
     // print(articles);
-    print(apiKeys.length);
     return apiKeys;
   }
 }
