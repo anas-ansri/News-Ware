@@ -5,9 +5,9 @@ class TextFieldWidget extends StatefulWidget {
   final String label;
   final String text;
   final ValueChanged<String> onChanged;
-  bool readOnly;
+  final bool readOnly;
 
-  TextFieldWidget({
+  const TextFieldWidget({
     Key? key,
     this.readOnly = false,
     this.maxLines = 1,

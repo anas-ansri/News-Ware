@@ -1,20 +1,18 @@
 // import 'dart:html';
 
 // import 'package:email_validator/email_validator.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:news_ware/utils/constants.dart';
-import 'package:news_ware/helper/rounded_button.dart';
+
 import 'package:news_ware/services/database.dart';
-import 'package:news_ware/utils/validator.dart' as v;
-import 'package:url_launcher/url_launcher.dart';
 
 class FeedbackPage extends StatefulWidget {
-  late String name;
-  late String email;
-  FeedbackPage({Key? key, required this.email, required this.name})
+  final String name;
+  final String email;
+  const FeedbackPage({Key? key, required this.email, required this.name})
       : super(key: key);
 
   @override
@@ -89,7 +87,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   Widget _buildCategory() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       // child: SafeArea(
       //   right: true,
       child: Row(
@@ -100,7 +98,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 fontSize: 2.0 * getWidthValue(context),
                 fontWeight: FontWeight.bold),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           ),
           Expanded(
@@ -207,7 +205,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Feedback"),
+          title: const Text("Feedback"),
           centerTitle: true,
           backgroundColor: kPrimaryColor,
           actions: [

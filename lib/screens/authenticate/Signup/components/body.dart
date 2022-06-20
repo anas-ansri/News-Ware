@@ -12,12 +12,14 @@ import 'package:news_ware/screens/authenticate/Signup/components/or_divider.dart
 import 'package:news_ware/services/auth.dart';
 
 class Body extends StatefulWidget {
+  const Body({Key? key}) : super(key: key);
+
   @override
   State<Body> createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -35,7 +37,7 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return loading
-        ? LoadingSplash()
+        ? const LoadingSplash()
         : Background(
             child: SingleChildScrollView(
               child: Form(
@@ -118,7 +120,7 @@ class _BodyState extends State<Body> {
                           error = e.toString();
 
                           // TODO
-                          // showErrorAlert(context, e.toString());
+                          showErrorAlert(context, e.toString());
                         }
                       },
                     ),
@@ -130,7 +132,7 @@ class _BodyState extends State<Body> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return LoginScreen();
+                              return const LoginScreen();
                             },
                           ),
                         );

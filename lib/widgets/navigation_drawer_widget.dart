@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_ware/services/network_status_service.dart';
 import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/screens/home/home.dart';
 import 'package:news_ware/screens/menu/about_us.dart';
@@ -37,12 +38,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const MyActivity(),
+          builder: (context) => Connect(),
         ));
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => NewsSetting(),
+          builder: (context) => const NewsSetting(),
         ));
         break;
       case 2:
@@ -53,7 +54,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         break;
       case 3:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => AboutUs(),
+          builder: (context) => const AboutUs(),
         ));
         break;
     }
@@ -63,7 +64,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
     double widthValue = MediaQuery.of(context).size.width * 0.01;
     //Variables for Header in draw
     return Drawer(

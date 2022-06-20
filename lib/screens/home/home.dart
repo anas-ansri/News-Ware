@@ -10,7 +10,6 @@ import 'package:news_ware/screens/home/feed.dart';
 import 'package:news_ware/screens/home/profile.dart';
 import 'package:news_ware/screens/home/saved.dart';
 import 'package:news_ware/services/database.dart';
-import 'package:news_ware/widgets/card_shimmers.dart';
 import 'package:news_ware/widgets/navigation_drawer_widget.dart';
 import 'package:news_ware/widgets/search_page.dart';
 
@@ -46,8 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    DatabaseService db = DatabaseService(uid: uid);
-    Color navyColor = Colors.white;
+
     return StreamBuilder(
         stream: DatabaseService(uid: uid).userDetail,
         builder: (BuildContext context, AsyncSnapshot<UserData> snapshot) {
@@ -191,7 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ));
           } else {
-            return LoadingSplash();
+            return const LoadingSplash();
           }
         });
   }

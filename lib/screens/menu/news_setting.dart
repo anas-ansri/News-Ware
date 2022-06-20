@@ -72,7 +72,7 @@ class _NewsSettingState extends State<NewsSetting> {
                 ),
               );
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(kPrimaryColor),
                 ),

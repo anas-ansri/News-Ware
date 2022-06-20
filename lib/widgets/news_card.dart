@@ -51,7 +51,6 @@ class _NewsCardState extends State<NewsCard> {
     var dateNow = DateTime.now();
     var publishedBefore = dateNow.difference(parseDate);
     final timeAgo = DateTime.now().subtract(publishedBefore);
-    final textColor = kPrimaryColor;
 
     return Card(
       // color: secondryColor,
@@ -73,7 +72,18 @@ class _NewsCardState extends State<NewsCard> {
             subtitle: Text(widget.author + ", " + timeago.format(timeAgo)),
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              final timeStamp =
+                  DateTime.now().millisecondsSinceEpoch.toString();
+              await db.readRecord(
+                  timeStamp,
+                  widget.source,
+                  widget.author,
+                  widget.urlImage,
+                  widget.title,
+                  widget.dec,
+                  widget.time,
+                  widget.url);
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -125,7 +135,7 @@ class _NewsCardState extends State<NewsCard> {
             // const SizedBox(
             //   width: 20,
             // ),
-            SizedBox(
+            const SizedBox(
               width: 15,
             ),
             FutureBuilder(
@@ -176,7 +186,7 @@ class _NewsCardState extends State<NewsCard> {
                     },
                     icon: saveToggle
                         ? const Icon(Icons.bookmark)
-                        : Icon(Icons.bookmark_border));
+                        : const Icon(Icons.bookmark_border));
               },
             ),
             const Spacer(),
@@ -193,7 +203,7 @@ class _NewsCardState extends State<NewsCard> {
                       text: "${widget.title}\nNews Url: ${widget.url}");
                 },
                 icon: const Icon(Icons.share)),
-            SizedBox(
+            const SizedBox(
               width: 15,
             ),
           ]),

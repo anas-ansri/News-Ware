@@ -1,6 +1,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ware/models/user.dart';
+import 'package:news_ware/services/database.dart';
 // import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/card_shimmers.dart';
 import '../services/news.dart';
@@ -19,8 +20,11 @@ class _SearchPageState extends State<SearchPage> {
   List<ArticleModel> articles = List<ArticleModel>.empty(growable: true);
   UserData? userData;
   News news = News();
+  Db db = Db();
   @override
   Widget build(BuildContext context) {
+    final timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
+    db.searchRecord(timeStamp, widget.query);
     // String uid = FirebaseAuth.instance.currentUser!.uid;
 
     // return StreamBuilder<UserData>(

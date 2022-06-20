@@ -34,7 +34,7 @@ class Loading extends StatelessWidget {
           ),
           subtitle: ShimmerWidget.rectangular(height: 10),
         ),
-        ShimmerWidget.rectangular(height: 300),
+        const ShimmerWidget.rectangular(height: 300),
         Container(
           padding: const EdgeInsets.all(10),
           child: Column(children: const [
@@ -83,7 +83,7 @@ class ShimmerWidget extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: Colors.grey[400]!,
       highlightColor: Colors.grey[200]!,
-      period: Duration(seconds: 2),
+      period: const Duration(seconds: 2),
       child: Container(
         width: width,
         height: height,

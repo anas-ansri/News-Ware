@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 import 'package:news_ware/models/article_model.dart';
 import 'package:news_ware/models/user.dart';
 
@@ -145,6 +146,42 @@ class Db {
       "dec": dec,
       "time": time,
       "url": url
+    });
+  }
+
+  Future readRecord(
+      String timeStamp,
+      String source,
+      String author,
+      String urlImage,
+      String title,
+      String dec,
+      String time,
+      String url) async {
+    uid = FirebaseAuth.instance.currentUser!.uid;
+    DatabaseReference ref = database.ref("activity/$uid/read/$timeStamp");
+    await ref.set({
+      "source": source,
+      "author": author,
+      "urlImage": urlImage,
+      "title": title,
+      "dec": dec,
+      "time": time,
+      "url": url
+    });
+  }
+
+  Future searchRecord(
+    String timeStamp,
+    String query,
+  ) async {
+    uid = FirebaseAuth.instance.currentUser!.uid;
+    DatabaseReference ref = database.ref("activity/$uid/search/$timeStamp");
+    DateTime now = DateTime.now();
+    String currentDt = DateFormat().add_yMEd().add_jm().format(now);
+    await ref.set({
+      "date_time": currentDt,
+      "query": query,
     });
   }
 

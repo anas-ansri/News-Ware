@@ -17,11 +17,7 @@ class AuthService {
   }
 
   MyUser? _userFromFirebaseUser(User user) {
-    if (user != null) {
-      return MyUser(uid: user.uid);
-    } else {
-      return null;
-    }
+    return MyUser(uid: user.uid);
   }
 
   //auth change user steam

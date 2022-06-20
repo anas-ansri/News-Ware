@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/already_have_an_account_acheck.dart';
 import 'package:news_ware/helper/loading_splash.dart';
@@ -10,8 +8,6 @@ import 'package:news_ware/helper/rounded_password_field.dart';
 import 'package:news_ware/screens/authenticate/Login/components/background.dart';
 import 'package:news_ware/screens/authenticate/Signup/signup_screen.dart';
 import 'package:news_ware/services/auth.dart';
-
-import '../../Signup/components/or_divider.dart';
 
 class Body extends StatefulWidget {
   const Body({
@@ -38,7 +34,7 @@ class _BodyState extends State<Body> {
     AuthService _auth = AuthService();
     Size size = MediaQuery.of(context).size;
     return loading
-        ? LoadingSplash()
+        ? const LoadingSplash()
         : Background(
             child: SingleChildScrollView(
               child: Form(
@@ -97,7 +93,7 @@ class _BodyState extends State<Body> {
                             Navigator.of(context).pop();
                           }
                         } else {
-                          const Text("Please Enter valid credentials");
+                          const Text("Invalid Credentials");
                         }
                         //email:test@test.c pass: tgtgtgtg
                       },

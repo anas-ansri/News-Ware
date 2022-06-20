@@ -73,10 +73,13 @@ class _LoadingSplashState extends State<LoadingSplash> {
                     // fontWeight: FontWeight.bold,
                     color: Colors.white), ////HexColor("#fc6424")
               ),
-              const Padding(padding: EdgeInsets.only(top: 50.0)),
-              LoadingAnimationWidget.inkDrop(
-                color: Colors.white,
-                size: 50,
+              const Padding(padding: EdgeInsets.only(top: 80.0)),
+              Flexible(
+                child: LoadingAnimationWidget.flickr(
+                  leftDotColor: Colors.green,
+                  rightDotColor: Colors.red,
+                  size: 60,
+                ),
               ),
               SizedBox(
                 height: 20.0 * getHeightValue(context),

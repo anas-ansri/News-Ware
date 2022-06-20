@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/rounded_button.dart';
 import 'package:news_ware/screens/home/home.dart';
-import 'package:news_ware/services/auth.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
@@ -124,7 +123,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                   style: TextStyle(fontSize: 2.0 * getHeightValue(context)),
                   textAlign: TextAlign.center),
               // Divider(),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               RoundedButton(

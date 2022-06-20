@@ -1,15 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/services/news.dart';
 import 'package:news_ware/models/article_model.dart';
 import 'package:news_ware/models/categories.dart';
 import 'package:news_ware/models/user.dart';
-import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/card_shimmers.dart';
 import 'package:news_ware/widgets/news_card.dart';
-import 'package:provider/provider.dart';
 
 class Feed extends StatefulWidget {
   final UserData? userData;
@@ -21,7 +17,6 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   final categories = Category.all();
-  bool _loading = true;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -181,7 +176,7 @@ class _TopHeadlinesState extends State<TopHeadlines>
             return Text("${snapshot.error}");
           }
           // By default, show a loading spinner.
-          return Loading();
+          return const Loading();
         });
   }
 }
@@ -201,6 +196,7 @@ class _CategoryNewsState extends State<CategoryNews>
   News news = News();
 
   late Future<List<ArticleModel>> articles;
+
   void getData() {
     setState(() {
       articles = news.fetchNews(context, widget.category, widget.country);
@@ -251,7 +247,7 @@ class _CategoryNewsState extends State<CategoryNews>
             return Text("${snapshot.error}");
           }
           // By default, show a loading spinner.
-          return Loading();
+          return const Loading();
         });
   }
 }

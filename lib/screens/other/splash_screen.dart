@@ -14,23 +14,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool _isVisible = false;
+  // bool _isVisible = false;
   _SplashScreenState() {
-    Timer(const Duration(milliseconds: 2000), () {
+    Timer(const Duration(milliseconds: 3000), () {
       setState(() {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) {
           return StreamProvider<MyUser?>.value(
-              value: AuthService().user, initialData: null, child: Wrapper());
+              value: AuthService().user,
+              initialData: null,
+              child: const Wrapper());
         }), (route) => false);
       });
     });
-    Timer(const Duration(milliseconds: 10), () {
-      setState(() {
-        _isVisible =
-            true; // Now it is showing fade effect and navigating to Login page
-      });
-    });
+    // Timer(const Duration(milliseconds: 10), () {
+    //   setState(() {
+    //     _isVisible =
+    //         true; // Now it is showing fade effect and navigating to Login page
+    //   });
+    // });
   }
 
   @override
