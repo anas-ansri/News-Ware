@@ -48,7 +48,7 @@ class _ProfileState extends State<Profile> {
         Padding(
           padding: const EdgeInsets.all(45.0),
           child: RoundedButton(
-              fontSize: 2.5 * getWidthValue(context),
+              fontSize: 2.0 * getWidthValue(context),
               text: "Edit",
               press: () {
                 Navigator.of(context).push(

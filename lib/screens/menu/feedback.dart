@@ -89,44 +89,44 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   Widget _buildCategory() {
     return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: minValue * 2, horizontal: minValue * 3),
-      child: SafeArea(
-        child: Row(
-          children: <Widget>[
-            Text(
-              "Select feedback type",
-              style: TextStyle(
-                  fontSize: 2.0 * getWidthValue(context),
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              width: 6,
-            ),
-            Expanded(
-                child: Align(
-              alignment: Alignment.centerRight,
-              child: DropdownButton<String>(
-                onChanged: (type) {
-                  setState(() {
-                    _feedbackType = type!;
-                  });
-                },
-                hint: Text(
-                  _feedbackType,
-                  style: TextStyle(fontSize: 2.0 * getWidthValue(context)),
-                ),
-                items: _feedbackTypeList
-                    .map((type) => DropdownMenuItem<String>(
-                          child: Text(type),
-                          value: type,
-                        ))
-                    .toList(),
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      // child: SafeArea(
+      //   right: true,
+      child: Row(
+        children: <Widget>[
+          Text(
+            "Select feedback type",
+            style: TextStyle(
+                fontSize: 2.0 * getWidthValue(context),
+                fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+              child: Align(
+            alignment: Alignment.centerRight,
+            child: DropdownButton<String>(
+              onChanged: (type) {
+                setState(() {
+                  _feedbackType = type!;
+                });
+              },
+              hint: Text(
+                _feedbackType,
+                style: TextStyle(fontSize: 2.0 * getWidthValue(context)),
               ),
-            ))
-          ],
-        ),
+              items: _feedbackTypeList
+                  .map((type) => DropdownMenuItem<String>(
+                        child: Text(type),
+                        value: type,
+                      ))
+                  .toList(),
+            ),
+          ))
+        ],
       ),
+      // ),
     );
   }
 

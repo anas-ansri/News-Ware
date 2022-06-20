@@ -103,7 +103,7 @@ class _NewsCardState extends State<NewsCard> {
                   widget.title,
                   // textAlign: TextAlign.start,
                   style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w600),
+                      fontSize: 15, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 3),
                 ExpandableText(text: widget.dec, max: .5)

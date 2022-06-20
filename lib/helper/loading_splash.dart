@@ -46,7 +46,7 @@ class _LoadingSplashState extends State<LoadingSplash> {
                 child: Center(
                     // child: ClipOval(
                     child: Image.asset(
-                        "assets/icons/app_icon.png") //put your logo here
+                        "assets/icons/only_icon.png") //put your logo here
                     // ),
                     ),
                 // decoration: BoxDecoration(
@@ -64,6 +64,7 @@ class _LoadingSplashState extends State<LoadingSplash> {
               const Padding(padding: EdgeInsets.only(top: 30.0)),
               const Text(
                 "NEWSWARE",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 25,
                     // fontStyle: FontStyle.italic,
@@ -72,8 +73,7 @@ class _LoadingSplashState extends State<LoadingSplash> {
                     // fontWeight: FontWeight.bold,
                     color: Colors.white), ////HexColor("#fc6424")
               ),
-              // const Padding(padding: EdgeInsets.only(top: 50.0)),
-              const Spacer(),
+              const Padding(padding: EdgeInsets.only(top: 50.0)),
               LoadingAnimationWidget.inkDrop(
                 color: Colors.white,
                 size: 50,

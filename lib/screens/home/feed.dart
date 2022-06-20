@@ -9,6 +9,7 @@ import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/card_shimmers.dart';
 import 'package:news_ware/widgets/news_card.dart';
+import 'package:provider/provider.dart';
 
 class Feed extends StatefulWidget {
   final UserData? userData;
@@ -105,32 +106,76 @@ class TopHeadlines extends StatefulWidget {
   State<TopHeadlines> createState() => _TopHeadlinesState();
 }
 
-class _TopHeadlinesState extends State<TopHeadlines> {
+class _TopHeadlinesState extends State<TopHeadlines>
+    with AutomaticKeepAliveClientMixin {
   News news = News();
+
+  late Future<List<ArticleModel>> articles;
+  void getData() {
+    setState(() {
+      articles = news.getNews(widget.country);
+    });
+  }
+
+  // Must include
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  // late Future<List<ArticleModel>> articles;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   // must use listen false here
+  //   // final news = Provider.of<News>(context, listen: false);
+  //   articles = news.getNews(widget.country);
+  // }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+
+  //   // final username = Provider.of<SharedPreferencesFunction>(context).username;
+  //   // user = userApi.getUserByUsername(username: username);
+  //   articles = news.getNews(widget.country);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder<List<ArticleModel>>(
-        future: news.getNews(widget.country),
+        future: articles,
         builder: (context, snapshot) {
           //let's check if we got a response or not
           if (snapshot.hasData) {
             //Now let's make a list of articles
             List<ArticleModel>? articles = snapshot.data;
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              itemCount: articles?.length,
-              itemBuilder: (context, index) {
-                return NewsCard(
-                    source: articles![index].sourceName,
-                    author: articles[index].author,
-                    urlImage: articles[index].urlToImage,
-                    title: articles[index].title,
-                    dec: articles[index].description,
-                    time: articles[index].publishedAt,
-                    url: articles[index].url);
+            return RefreshIndicator(
+              onRefresh: () async {
+                getData();
               },
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: articles?.length,
+                itemBuilder: (context, index) {
+                  return NewsCard(
+                      source: articles![index].sourceName,
+                      author: articles[index].author,
+                      urlImage: articles[index].urlToImage,
+                      title: articles[index].title,
+                      dec: articles[index].description,
+                      time: articles[index].publishedAt,
+                      url: articles[index].url);
+                },
+              ),
             );
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
@@ -151,31 +196,56 @@ class CategoryNews extends StatefulWidget {
   State<CategoryNews> createState() => _CategoryNewsState();
 }
 
-class _CategoryNewsState extends State<CategoryNews> {
+class _CategoryNewsState extends State<CategoryNews>
+    with AutomaticKeepAliveClientMixin {
   News news = News();
+
+  late Future<List<ArticleModel>> articles;
+  void getData() {
+    setState(() {
+      articles = news.fetchNews(context, widget.category, widget.country);
+    });
+  }
+
+  // Must include
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder<List<ArticleModel>>(
-        future: news.fetchNews(context, widget.category, widget.country),
+        future: articles,
         builder: (context, snapshot) {
           //let's check if we got a response or not
           if (snapshot.hasData) {
             //Now let's make a list of articles
             List<ArticleModel>? articles = snapshot.data;
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: const BouncingScrollPhysics(),
-              itemCount: articles?.length,
-              itemBuilder: (context, index) {
-                return NewsCard(
-                    source: articles![index].sourceName,
-                    author: articles[index].author,
-                    urlImage: articles[index].urlToImage,
-                    title: articles[index].title,
-                    dec: articles[index].description,
-                    time: articles[index].publishedAt,
-                    url: articles[index].url);
+            return RefreshIndicator(
+              onRefresh: () async {
+                getData();
               },
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemCount: articles?.length,
+                itemBuilder: (context, index) {
+                  return NewsCard(
+                      source: articles![index].sourceName,
+                      author: articles[index].author,
+                      urlImage: articles[index].urlToImage,
+                      title: articles[index].title,
+                      dec: articles[index].description,
+                      time: articles[index].publishedAt,
+                      url: articles[index].url);
+                },
+              ),
             );
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
