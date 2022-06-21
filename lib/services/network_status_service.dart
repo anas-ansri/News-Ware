@@ -24,21 +24,33 @@ class _ConnectState extends State<Connect> {
         if (connectivity == ConnectivityResult.none) {
           return Scaffold(
             backgroundColor: Colors.white,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.asset(
-                  "assets/images/no-internet-animation.gif",
-                  width: 20.0 * getWidthValue(context),
-                  height: 20.0 * getHeightValue(context),
-                ),
-                const Text(
-                  'You are offline',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w200),
-                ),
-              ],
+            body: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.asset(
+                    "assets/images/no-internet-animation.gif",
+                    width: 20.0 * getWidthValue(context),
+                    height: 20.0 * getHeightValue(context),
+                  ),
+                  const Text(
+                    'You are offline',
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.w200),
+                  ),
+                  Text(
+                    'Please check your internet connection and try again.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w200),
+                  ),
+                ],
+              ),
             ),
           );
         }

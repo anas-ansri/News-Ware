@@ -35,8 +35,9 @@ Widget appTitle = const Text(
 //   ],
 // );
 
-const kPrimaryLightColor = Color.fromARGB(255, 165, 183, 255);
-const secondryColor = Color.fromARGB(255, 137, 157, 243);
+const kPrimaryLightColor = Color.fromARGB(255, 126, 132, 153);
+const secondryColor = Color.fromARGB(255, 206, 178, 255);
+// const secondryColor = Colors.black12;
 // const primaryFont = FontFa,
 
 const double defaultPadding = 16.0;
