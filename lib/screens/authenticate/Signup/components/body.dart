@@ -85,7 +85,7 @@ class _BodyState extends State<Body> {
                     RoundedPasswordField(
                       validator: (value) {
                         if (value!.isEmpty || value.length < 8) {
-                          return "Please enter a valid password, password should contain at least 8 letters.";
+                          return "Please enter a valid password, \npassword must be greater then or equal to 8 character.";
                         } else {
                           return null;
                         }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:news_ware/services/network_status_service.dart';
 import 'package:news_ware/services/news.dart';
 import 'package:news_ware/models/article_model.dart';
 import 'package:news_ware/models/categories.dart';
@@ -145,39 +146,41 @@ class _TopHeadlinesState extends State<TopHeadlines>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder<List<ArticleModel>>(
-        future: articles,
-        builder: (context, snapshot) {
-          //let's check if we got a response or not
-          if (snapshot.hasData) {
-            //Now let's make a list of articles
-            List<ArticleModel>? articles = snapshot.data;
-            return RefreshIndicator(
-              onRefresh: () async {
-                getData();
-              },
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: articles?.length,
-                itemBuilder: (context, index) {
-                  return NewsCard(
-                      source: articles![index].sourceName,
-                      author: articles[index].author,
-                      urlImage: articles[index].urlToImage,
-                      title: articles[index].title,
-                      dec: articles[index].description,
-                      time: articles[index].publishedAt,
-                      url: articles[index].url);
+    return Connect(
+      child: FutureBuilder<List<ArticleModel>>(
+          future: articles,
+          builder: (context, snapshot) {
+            //let's check if we got a response or not
+            if (snapshot.hasData) {
+              //Now let's make a list of articles
+              List<ArticleModel>? articles = snapshot.data;
+              return RefreshIndicator(
+                onRefresh: () async {
+                  getData();
                 },
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          // By default, show a loading spinner.
-          return const Loading();
-        });
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: articles?.length,
+                  itemBuilder: (context, index) {
+                    return NewsCard(
+                        source: articles![index].sourceName,
+                        author: articles[index].author,
+                        urlImage: articles[index].urlToImage,
+                        title: articles[index].title,
+                        dec: articles[index].description,
+                        time: articles[index].publishedAt,
+                        url: articles[index].url);
+                  },
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            // By default, show a loading spinner.
+            return const Loading();
+          }),
+    );
   }
 }
 
@@ -216,39 +219,41 @@ class _CategoryNewsState extends State<CategoryNews>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder<List<ArticleModel>>(
-        future: articles,
-        builder: (context, snapshot) {
-          //let's check if we got a response or not
-          if (snapshot.hasData) {
-            //Now let's make a list of articles
-            List<ArticleModel>? articles = snapshot.data;
-            return RefreshIndicator(
-              onRefresh: () async {
-                getData();
-              },
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemCount: articles?.length,
-                itemBuilder: (context, index) {
-                  return NewsCard(
-                      source: articles![index].sourceName,
-                      author: articles[index].author,
-                      urlImage: articles[index].urlToImage,
-                      title: articles[index].title,
-                      dec: articles[index].description,
-                      time: articles[index].publishedAt,
-                      url: articles[index].url);
+    return Connect(
+      child: FutureBuilder<List<ArticleModel>>(
+          future: articles,
+          builder: (context, snapshot) {
+            //let's check if we got a response or not
+            if (snapshot.hasData) {
+              //Now let's make a list of articles
+              List<ArticleModel>? articles = snapshot.data;
+              return RefreshIndicator(
+                onRefresh: () async {
+                  getData();
                 },
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          // By default, show a loading spinner.
-          return const Loading();
-        });
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: articles?.length,
+                  itemBuilder: (context, index) {
+                    return NewsCard(
+                        source: articles![index].sourceName,
+                        author: articles[index].author,
+                        urlImage: articles[index].urlToImage,
+                        title: articles[index].title,
+                        dec: articles[index].description,
+                        time: articles[index].publishedAt,
+                        url: articles[index].url);
+                  },
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            // By default, show a loading spinner.
+            return const Loading();
+          }),
+    );
   }
 }
 

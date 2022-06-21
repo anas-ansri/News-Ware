@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_ware/models/user.dart';
 import 'package:news_ware/services/database.dart';
+import 'package:news_ware/services/network_status_service.dart';
 // import 'package:news_ware/services/database.dart';
 import 'package:news_ware/widgets/card_shimmers.dart';
 import '../services/news.dart';
@@ -32,32 +33,34 @@ class _SearchPageState extends State<SearchPage> {
     //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
     //       if (snapshot.hasData) {
     //         userData = snapshot.data;
-    return FutureBuilder<List<ArticleModel>>(
-        future: news.searchNews(widget.query),
-        builder: (context, AsyncSnapshot<List<ArticleModel>> snapshot) {
-          //let's check if we got a response or not
-          if (snapshot.hasData) {
-            //Now let's make a list of articles
-            List<ArticleModel>? articles = snapshot.data;
-            // print(articles?.length);
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: articles!.length,
-              itemBuilder: (context, index) {
-                return NewsCard(
-                    source: articles[index].sourceName,
-                    author: articles[index].author,
-                    urlImage: articles[index].urlToImage,
-                    title: articles[index].title,
-                    dec: articles[index].description,
-                    time: articles[index].publishedAt,
-                    url: articles[index].url);
-              },
-            );
-          }
-          return const Loading();
-        });
+    return Connect(
+      child: FutureBuilder<List<ArticleModel>>(
+          future: news.searchNews(widget.query),
+          builder: (context, AsyncSnapshot<List<ArticleModel>> snapshot) {
+            //let's check if we got a response or not
+            if (snapshot.hasData) {
+              //Now let's make a list of articles
+              List<ArticleModel>? articles = snapshot.data;
+              // print(articles?.length);
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: articles!.length,
+                itemBuilder: (context, index) {
+                  return NewsCard(
+                      source: articles[index].sourceName,
+                      author: articles[index].author,
+                      urlImage: articles[index].urlToImage,
+                      title: articles[index].title,
+                      dec: articles[index].description,
+                      time: articles[index].publishedAt,
+                      url: articles[index].url);
+                },
+              );
+            }
+            return const Loading();
+          }),
+    );
     //   } else {
     //     return const Loading();
     //   }

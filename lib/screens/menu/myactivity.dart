@@ -1,5 +1,6 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_ware/services/network_status_service.dart';
 import 'package:news_ware/utils/constants.dart';
 // import 'package:news_ware/helper/loading.dart';
 
@@ -22,12 +23,14 @@ class MyActivity extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.grey[200],
-        body: FancyShimmerImage(
-          imageUrl:
-              "https://firebasestorage.googleapis.com/v0/b/news-ware-4b3d0.appspot.com/o/AppData%2FAssets%2FImages%2Fcoming_soon4.png?alt=media&token=96d037ea-4f8b-42aa-b8a0-5482a943a47e",
-          width: double.infinity,
-          height: double.infinity,
-          boxFit: BoxFit.cover,
+        body: Connect(
+          child: FancyShimmerImage(
+            imageUrl:
+                "https://firebasestorage.googleapis.com/v0/b/news-ware-4b3d0.appspot.com/o/AppData%2FAssets%2FImages%2Fcoming_soon4.png?alt=media&token=96d037ea-4f8b-42aa-b8a0-5482a943a47e",
+            width: double.infinity,
+            height: double.infinity,
+            boxFit: BoxFit.cover,
+          ),
         )
         // Center(
         //   child: Text(

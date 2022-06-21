@@ -38,7 +38,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Connect(),
+          builder: (context) => const MyActivity(),
         ));
         break;
       case 1:

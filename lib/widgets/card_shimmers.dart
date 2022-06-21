@@ -34,7 +34,10 @@ class Loading extends StatelessWidget {
           ),
           subtitle: ShimmerWidget.rectangular(height: 10),
         ),
-        const ShimmerWidget.rectangular(height: 300),
+        FittedBox(
+            fit: BoxFit.cover,
+            child: ShimmerWidget.rectangular(
+                width: 100.0 * widthValue, height: 75.0 * widthValue)),
         Container(
           padding: const EdgeInsets.all(10),
           child: Column(children: const [

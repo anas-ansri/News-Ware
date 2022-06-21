@@ -16,14 +16,22 @@ class RoundedPasswordField extends StatefulWidget {
 }
 
 class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
-  bool hide = true;
 
-  @override
+  bool _isHidden = true;
+
+  void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
+  }
+    @override
   Widget build(BuildContext context) {
+
+
     return TextFieldContainer(
       child: TextFormField(
         validator: widget.validator,
-        obscureText: hide,
+        obscureText: _isHidden,
         onChanged: widget.onChanged,
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
@@ -32,15 +40,23 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
             Icons.lock,
             color: kPrimaryColor,
           ),
-          suffixIcon: IconButton(
-            icon: const Icon(
-              Icons.visibility,
-              color: kPrimaryColor,
-            ),
-            onPressed: () {
-              hide = !hide;
-            },
+          suffix:InkWell(
+          onTap: _togglePasswordView,  /// This is Magical Function
+          child: Icon(
+            _isHidden ?         /// CHeck Show & Hide.
+            Icons.visibility :
+            Icons.visibility_off,
           ),
+        ),
+          // suffixIcon: IconButton(
+          //   icon: const Icon(
+          //     Icons.visibility,
+          //     color: kPrimaryColor,
+          //   ),
+          //   onPressed: () {
+          //     hide = !hide;
+          //   },
+          // ),
           border: InputBorder.none,
         ),
       ),

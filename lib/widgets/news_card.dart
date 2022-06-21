@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -47,10 +48,20 @@ class _NewsCardState extends State<NewsCard> {
     DateTime parseDate =
         DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(widget.time).toLocal();
     // var dateTime = DateTime.parse(parseDate.toString());
+    // print("Original time"+parseDate.toString());
+    // print("Local time"+parseDate.toLocal().toString());
+    // print("UTC time"+parseDate.toUtc().toString());
+
+
     // var dateLocal = dateTime.toLocal();
     var dateNow = DateTime.now();
+    // print("Now time utc"+dateNow.toUtc().toString());
+    // print("Now time local"+dateNow.toLocal().toString());
+
     var publishedBefore = dateNow.difference(parseDate);
-    final timeAgo = DateTime.now().subtract(publishedBefore);
+
+    var timeAgo = dateNow.subtract(publishedBefore);
+    // final timeAgo = DateTime.now().subtract(publishedBefore);
 
     return Card(
       // color: secondryColor,
