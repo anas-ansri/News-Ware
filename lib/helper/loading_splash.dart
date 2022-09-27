@@ -44,22 +44,10 @@ class _LoadingSplashState extends State<LoadingSplash> {
                 height: 120.0,
                 width: 120.0,
                 child: Center(
-                    // child: ClipOval(
                     child: Image.asset(
                         "assets/icons/only_icon.png") //put your logo here
-                    // ),
+
                     ),
-                // decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Colors.white,
-                //     boxShadow: [
-                //       BoxShadow(
-                //         color: Colors.black.withOpacity(0.3),
-                //         blurRadius: 2.0,
-                //         offset: const Offset(5.0, 3.0),
-                //         spreadRadius: 2.0,
-                //       )
-                // ]),
               ),
               const Padding(padding: EdgeInsets.only(top: 30.0)),
               const Text(

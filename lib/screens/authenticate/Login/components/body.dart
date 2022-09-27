@@ -20,18 +20,16 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
+
   String email = '';
-
-  String name = '';
-
   String password = '';
 
   String error = '';
   bool loading = false;
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    AuthService _auth = AuthService();
     Size size = MediaQuery.of(context).size;
     return loading
         ? const LoadingSplash()

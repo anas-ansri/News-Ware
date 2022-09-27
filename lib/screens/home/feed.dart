@@ -145,13 +145,16 @@ class _TopHeadlinesState extends State<TopHeadlines>
 
   @override
   Widget build(BuildContext context) {
+
     super.build(context);
     return Connect(
       child: FutureBuilder<List<ArticleModel>>(
           future: articles,
           builder: (context, snapshot) {
+
             //let's check if we got a response or not
             if (snapshot.hasData) {
+
               //Now let's make a list of articles
               List<ArticleModel>? articles = snapshot.data;
               return RefreshIndicator(
@@ -175,6 +178,7 @@ class _TopHeadlinesState extends State<TopHeadlines>
                 ),
               );
             } else if (snapshot.hasError) {
+
               return Text("${snapshot.error}");
             }
             // By default, show a loading spinner.

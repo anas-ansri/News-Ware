@@ -1,5 +1,5 @@
 name: news_ware
-description: A new Flutter project.
+description: A news feed app that lets you see the latest news from all of the major news sources in one convenient, quick and light app so you can stay up to date on what's going on in the world.\nAnas Ansari (App Developer) began developing this app in March 2022 with the goal of creating a simple and fast app with a user friendly interface.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

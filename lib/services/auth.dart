@@ -94,9 +94,6 @@ class AuthService {
 
 //sign out
   Future signOut(String method) async {
-    print(method);
-    print(method);
-
     try {
       if (method == "Google") {
         print(method);

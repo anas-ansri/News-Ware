@@ -27,13 +27,11 @@ class _AboutUsState extends State<AboutUs> {
         ),
         body: ListView(
           // shrinkWrap: true,
-
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
+              padding: const EdgeInsets.all(20),
               child: Text(
-                "NEWSWARE is a news feed app that lets you see the latest news from all of the major news sources in one convenient, quick and light app so you can stay up to date on what's going on in the world.\nAnas Ansari (App Developer) began developing this app in March 2022 with the goal of creating a simple and fast app with a user friendly interface.",
+                "NEWSWARE is a news feed app that lets you see the latest news from all of the major news sources in one convenient, quick and light app so you can stay up to date on what's going on in the world.\nAnas Ansari (App Developer) began developing this app in March 2022 with the goal of creating a simple and fast app with a user friendly interface.\n First version of this app was completed and published on Amazon Appstore in 23 March 2022.",
                 style: GoogleFonts.sourceSansPro(
                     fontSize: 20.0,
                     fontStyle: FontStyle.italic,

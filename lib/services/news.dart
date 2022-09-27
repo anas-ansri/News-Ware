@@ -18,12 +18,20 @@ class News {
     List<ArticleModel> news = [];
 
     int index = 0;
-    String _apiKey = keyList![index];
+    String apiKey = keyList![index];
+
     while (true) {
-      _apiKey = keyList[index % keyList.length];
-      String url = '$base/top-headlines?country=$country&apiKey=$_apiKey';
+
+      print("List length: "+ keyList.length.toString());
+      print("Current Index : "+ index.toString());
+      apiKey = keyList[index % keyList.length];
+
+      String url = '$base/top-headlines?country=$country&apiKey=$apiKey';
+
       var response = await http.get(Uri.parse(url));
+
       var jsonData = jsonDecode(response.body);
+      print(apiKey);
       if (response.statusCode == 200) {
         if (jsonData['status'] == 'ok') {
           // print(jsonData["totalResults"]);
@@ -47,10 +55,7 @@ class News {
       } else if (response.statusCode == 429) {
         index++;
       } else {
-        // showErrorAlert(context, error)
         // print("Error occured ");
-        print(response.statusCode);
-        // break;
       }
     }
 

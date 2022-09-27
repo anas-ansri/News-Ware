@@ -147,7 +147,7 @@ packages:
       name: connectivity_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.4"
+    version: "2.3.5"
   connectivity_plus_linux:
     dependency: transitive
     description:
@@ -161,7 +161,7 @@ packages:
       name: connectivity_plus_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.3"
+    version: "1.2.4"
   connectivity_plus_platform_interface:
     dependency: transitive
     description:
@@ -1077,7 +1077,7 @@ packages:
       name: webview_flutter_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.11"
+    version: "2.8.13"
   webview_flutter_platform_interface:
     dependency: transitive
     description:

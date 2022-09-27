@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_ware/services/network_status_service.dart';
 import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/screens/home/home.dart';
 import 'package:news_ware/screens/menu/about_us.dart';

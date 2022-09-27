@@ -47,11 +47,8 @@ class _ExpandableTextState extends State<ExpandableText> {
               maxLines: 4,
               text: TextSpan(children: [
                 TextSpan(
-                    text: widget.text.substring(
-                            0,
-                            int.parse(
-                                "${(widget.text.length * widget.max).toInt()}")) +
-                        "...",
+                    text:
+                        "${widget.text.substring(0, int.parse("${(widget.text.length * widget.max).toInt()}"))}...",
                     style: const TextStyle(color: Colors.black54)),
                 WidgetSpan(
                     child: InkWell(

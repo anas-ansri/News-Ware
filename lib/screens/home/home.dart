@@ -5,7 +5,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:news_ware/utils/constants.dart';
 import 'package:news_ware/helper/loading_splash.dart';
 import 'package:news_ware/models/user.dart';
-
 import 'package:news_ware/screens/home/feed.dart';
 import 'package:news_ware/screens/home/profile.dart';
 import 'package:news_ware/screens/home/saved.dart';
@@ -58,7 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     name: userData!.displayName,
                     email: user.email!,
                     urlImage: userData!.photoUrl),
-
                 //App Bar
                 appBar: AppBar(
                   title: appTitle,
