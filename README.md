@@ -23,8 +23,11 @@ Getting Started
 To get started with NewsWare, follow these steps:
 
 1.  Clone repository and build and install apk using folllwing commands.
+
     `flutter build apk`
+    
     `flutter install`
+    
 2.  Open the app and browse the top headlines from trusted sources.
 3.  Stay up to date with the latest news from India and around the world with NewsWare.
 
