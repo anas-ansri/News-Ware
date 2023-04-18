@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:news_ware/utils/constants.dart';
@@ -21,7 +20,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     //User need to be created before
@@ -37,7 +35,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   Future checkEmailVerified() async {
     FirebaseAuth.instance.currentUser!.reload();
-    // user.reload;
     setState(() {
       isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     });
@@ -46,14 +43,12 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     timer?.cancel();
     super.dispose();
   }
 
   Future sendVerificationEmail() async {
     try {
-      // await firebase.auth().currentUser.sendEmailVerification();
 
       await user?.sendEmailVerification();
       if (!mounted) return;
@@ -83,19 +78,9 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             centerTitle: true,
             elevation: 0,
             backgroundColor: kPrimaryColor,
-            // leading: IconButton(
-            //   icon: Icon(Icons.arrow_back),
-            //   onPressed: () async {
-            //     await _auth.signOut();
-            //   },
-            // ),
           ),
           body: ListView(
             padding: const EdgeInsets.all(20.0),
-            // child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(
                 height: 30,
@@ -119,10 +104,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               ),
               Text(
                   "Please verify the email and come back.\nIf you didn't find email, don't forget to check your spam box and If you stil did not find email, click on resend button given below.\nRemember: You can request for verification email after 10 seconds.",
-                  // textAlign: TextAlign.center,
+ 
                   style: TextStyle(fontSize: 2.0 * getHeightValue(context)),
                   textAlign: TextAlign.center),
-              // Divider(),
+     
               const SizedBox(
                 height: 30,
               ),
